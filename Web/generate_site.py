@@ -43,8 +43,8 @@ BASE = "https://updateatlas.alperenalan.com"
 GITHUB = "https://github.com/alperenalan/UpdateAtlas"
 # Launch switches. Turn each on only once its destination really exists, so the
 # site never links to a private repository, an empty release or an inactive profile.
-PUBLIC_REPO = False
-RELEASED = False
+PUBLIC_REPO = True
+RELEASED = True
 SPONSORS = False
 # Every GitHub Release carries this stable asset name, so /latest/download/ resolves.
 DOWNLOAD = f"{GITHUB}/releases/latest/download/Update-Atlas.dmg"
