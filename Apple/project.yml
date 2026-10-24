@@ -1,0 +1,130 @@
+name: UpdateAtlas
+options:
+  bundleIdPrefix: com.alperenalan
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "27.0"
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    exactVersion: 2.10.0
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    GENERATE_INFOPLIST_FILE: NO
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "39"
+    UASOURCE_REVISION: local-development
+    ARCHS: arm64
+    ENABLE_HARDENED_RUNTIME: YES
+targets:
+  UpdateAtlas:
+    type: application
+    platform: macOS
+    sources:
+      - path: UpdateAtlas
+        excludes:
+          - AppIcons
+          - CLI
+          - Resources
+      - path: UpdateAtlas/Resources
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.alperenalan.updateatlas
+        PRODUCT_NAME: Update Atlas
+        PRODUCT_MODULE_NAME: UpdateAtlas
+        INFOPLIST_FILE: UpdateAtlas/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_APP_SANDBOX: NO
+    info:
+      path: UpdateAtlas/Info.plist
+      properties:
+        CFBundleDisplayName: Update Atlas
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.utilities
+        NSHighResolutionCapable: true
+        SUFeedURL: "https://updateatlas.alperenalan.com/appcast.xml"
+        SURequireSignedFeed: true
+        SUVerifyUpdateBeforeExtraction: true
+        SUSignedFeedFailureExpirationInterval: 0
+        SUEnableSystemProfiling: false
+        UASourceRevision: $(UASOURCE_REVISION)
+        UASupportURL: "https://updateatlas.alperenalan.com/#support"
+        SUPublicEDKey: 1ckmV/xO043m/akIVdWxFXoODdka+37cN4KOv/THLMo=
+        SUAutomaticallyUpdate: false
+    dependencies:
+      - sdk: Security.framework
+      - sdk: ServiceManagement.framework
+      - sdk: UserNotifications.framework
+      - package: Sparkle
+      - target: UpdateAtlasCLI
+        embed: true
+        link: false
+        codeSign: true
+        copy:
+          destination: executables
+          subpath: Helpers
+  UpdateAtlasCLI:
+    type: tool
+    platform: macOS
+    sources:
+      - UpdateAtlas/CLI
+      - UpdateAtlas/Models/AIIntegrationGuide.swift
+      - UpdateAtlas/Models/AppIdentity.swift
+      - UpdateAtlas/Models/BundledAppResources.swift
+      - UpdateAtlas/Models/LaunchAtLoginSettings.swift
+      - UpdateAtlas/Models/MenuBarSettings.swift
+      - UpdateAtlas/Models/ScanState.swift
+      - UpdateAtlas/Models/DiscoveryConfiguration.swift
+      - UpdateAtlas/Models/AppModels.swift
+      - UpdateAtlas/Models/AppL10n.swift
+      - UpdateAtlas/Models/CLIInventoryQuery.swift
+      - UpdateAtlas/Models/DirectUpdatePolicy.swift
+      - UpdateAtlas/Models/ManagerUpdatePolicy.swift
+      - UpdateAtlas/Models/ReleaseChannels.swift
+      - UpdateAtlas/Models/RemoteCatalog.swift
+      - UpdateAtlas/Services/CLIScanProgress.swift
+      - UpdateAtlas/Services/ApplicationScanner.swift
+      - UpdateAtlas/Services/LocalDiscoveryProvider.swift
+      - UpdateAtlas/Services/DockerDiscoveryProvider.swift
+      - UpdateAtlas/Services/DirectInstallScanner.swift
+      - UpdateAtlas/Services/PackageCommandRunner.swift
+      - UpdateAtlas/Services/PackageInventoryScanner.swift
+      - UpdateAtlas/Services/OfflinePackageInventory.swift
+      - UpdateAtlas/Models/CLIContract.swift
+      - UpdateAtlas/Services/CLIPreferences.swift
+      - UpdateAtlas/Services/RemoteCatalogService.swift
+      - UpdateAtlas/Services/UpdateCheckService.swift
+      - UpdateAtlas/Services/UpdateDetectionEngine.swift
+    settings:
+      base:
+        PRODUCT_NAME: update-atlas
+        SKIP_INSTALL: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.alperenalan.updateatlas.cli
+        ENABLE_APP_SANDBOX: NO
+    dependencies:
+      - sdk: Security.framework
+  UpdateAtlasTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - UpdateAtlasTests
+    dependencies:
+      - target: UpdateAtlas
+    settings:
+      base:
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Update Atlas.app/Contents/MacOS/Update Atlas"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  UpdateAtlas:
+    build:
+      targets:
+        UpdateAtlas: all
+        UpdateAtlasTests: [test]
+    test:
+      targets:
+        - UpdateAtlasTests

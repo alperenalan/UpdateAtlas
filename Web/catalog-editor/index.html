@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Update Atlas · Katalog editörü</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/editor.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="mark">UA</span><div><strong>Update Atlas</strong><small>Katalog çalışma alanı</small></div></div>
+    <span class="local-pill">● Yalnızca bu Mac</span>
+  </header>
+  <main>
+    <section class="intro">
+      <div>
+        <p class="eyebrow">KATALOG YÖNETİMİ</p>
+        <h1>Kuralları gözden geçir, düzenle ve doğrula.</h1>
+        <p>Kaynak dosya salt okunur. Düzenlemeler özel bir taslağa kaydedilir; yayınlama işlemi bu araçta yoktur.</p>
+      </div>
+      <div class="actions">
+        <button id="validate" class="secondary">Doğrula</button>
+        <button id="save" class="primary">Taslağı kaydet</button>
+        <button id="export" class="secondary">JSON dışa aktar</button>
+      </div>
+    </section>
+    <section class="metrics" aria-label="Katalog özeti">
+      <div><span>Kaynak</span><strong id="source-name">—</strong></div>
+      <div><span>Revizyon</span><strong id="revision">—</strong></div>
+      <div><span>Kurallar</span><strong id="rule-count">—</strong></div>
+      <div><span>Durum</span><strong id="save-state">Yükleniyor</strong></div>
+    </section>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <section class="workspace">
+      <div class="list-pane">
+        <div class="toolbar">
+          <label class="search"><span class="sr-only">Kural ara</span><input id="search" type="search" placeholder="Ad, yayıncı veya ID ara…" autocomplete="off"></label>
+          <select id="support-filter" aria-label="Destek durumuna göre filtrele"><option value="">Tüm durumlar</option><option value="supported">Destekleniyor</option><option value="managedExternally">Haricen yönetiliyor</option><option value="needsCatalog">Kaynak aranıyor</option><option value="unsupported">Desteklenmiyor</option></select>
+          <button id="add" class="secondary">+ Kural ekle</button>
+        </div>
+        <div class="table-wrap">
+          <table><thead><tr><th>Uygulama</th><th>Yayıncı</th><th>Destek</th><th>Güncelleme yolu</th><th>Sürüm kaynağı</th></tr></thead><tbody id="rows"></tbody></table>
+        </div>
+        <div class="table-footer"><span id="visible-count">—</span><span>ID’ler korunur; mevcut kurallar silinmez.</span></div>
+      </div>
+      <aside class="detail-pane" aria-label="Seçilen kural">
+        <div id="empty-detail" class="empty-detail"><span class="empty-icon">⌗</span><h2>Bir kural seçin</h2><p>Satıra tıklayarak kimlik, eşleştirme ve sürüm kaynağını düzenleyin.</p></div>
+        <div id="detail" hidden>
+          <div class="detail-head"><p class="eyebrow">KURAL AYRINTILARI</p><h2 id="detail-title">—</h2><code id="detail-id">—</code><button id="discard-new" class="secondary discard" hidden>Yeni kuralı iptal et</button></div>
+          <div class="form-section"><h3>Temel bilgiler</h3>
+            <label>ID <input data-field="id" spellcheck="false"></label>
+            <label>Görünen ad <input data-field="displayName"></label>
+            <label>Yayıncı <input data-field="publisher"></label>
+            <label>Destek durumu <select data-field="support"><option value="supported">Destekleniyor</option><option value="managedExternally">Haricen yönetiliyor</option><option value="needsCatalog">Kaynak aranıyor</option><option value="unsupported">Desteklenmiyor</option></select></label>
+          </div>
+          <div class="form-section"><h3>Eşleştirme <small>Her satıra bir değer</small></h3>
+            <label>Bundle ID’leri <textarea data-field="match.bundleIdentifiers" data-list rows="2" spellcheck="false"></textarea></label>
+            <label>İmza ekip ID’leri <textarea data-field="match.teamIdentifiers" data-list rows="2" spellcheck="false"></textarea></label>
+            <label>Dosya adı sonları <textarea data-field="match.pathSuffixes" data-list rows="2" spellcheck="false"></textarea></label>
+            <label>Çalıştırılabilir adları <textarea data-field="match.executableNames" data-list rows="2" spellcheck="false"></textarea></label>
+          </div>
+          <div class="form-section"><h3>Güncelleme mekanizması</h3>
+            <label>Tür <select data-field="mechanism.type" id="mechanism-type"></select></label>
+            <label>Ad <input data-field="mechanism.name"></label>
+            <label>Appcast URL <input data-field="mechanism.feedURL" spellcheck="false"></label>
+            <label>Yönetici bundle ID <input data-field="mechanism.managerBundleIdentifier" spellcheck="false"></label>
+          </div>
+          <div class="form-section"><h3>Birincil sürüm kaynağı</h3>
+            <label>Tür <select data-field="mechanism.provider.type" id="provider-type"></select></label>
+            <label>HTTPS URL <input data-field="mechanism.provider.url" spellcheck="false"></label>
+            <label>Kanal <input data-field="mechanism.provider.channel"></label>
+            <label>Yayın kanalı <input data-field="mechanism.provider.releaseChannel"></label>
+            <p class="hint">Yedek kaynaklar ve özel sağlayıcı alanları aşağıdaki JSON bölümünde düzenlenebilir.</p>
+          </div>
+          <div class="form-section"><h3>Kaynak ve notlar</h3>
+            <label>Üretici sitesi <input data-field="vendorURL" spellcheck="false"></label>
+            <label>Kaynak kodu <input data-field="sourceCodeURL" spellcheck="false"></label>
+            <label>Sürüm notları <input data-field="releaseNotesURL" spellcheck="false"></label>
+            <label>Notlar <textarea data-field="notes" rows="4"></textarea></label>
+          </div>
+          <details class="advanced"><summary>Gelişmiş · kural JSON’u</summary><p class="hint">Bilinmeyen alanlar dahil tüm kuralı düzenler. Mevcut ID değiştirilemez.</p><textarea id="entry-json" rows="16" spellcheck="false"></textarea><button id="apply-json" class="secondary">JSON’u uygula</button></details>
+        </div>
+      </aside>
+    </section>
+    <p class="footnote">Dışa aktarılan dosya, mevcut <code>stage_channel.py</code> doğrulama ve site yayın akışından geçmelidir. Canlı dosya burada değişmez.</p>
+  </main>
+</body>
+</html>

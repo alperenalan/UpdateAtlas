@@ -1,0 +1,21 @@
+name: Distribution channel validation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Read published channel resources
+        run: |
+          mkdir -p .temporary_files/channels
+          curl --fail --silent --show-error --max-time 30 https://updateatlas.alperenalan.com/appcast.xml -o .temporary_files/channels/appcast.xml
+          curl --fail --silent --show-error --max-time 30 https://updateatlas.alperenalan.com/api/update-atlas/catalog-v1.json -o .temporary_files/channels/catalog.json
+      - name: Verify signed feed, Stable policy and catalog
+        run: node __Assets__/Scripts/validate_channels.mjs .temporary_files/channels/appcast.xml .temporary_files/channels/catalog.json

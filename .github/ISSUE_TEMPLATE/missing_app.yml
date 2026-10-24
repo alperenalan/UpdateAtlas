@@ -1,0 +1,40 @@
+name: Missing or wrong app
+description: An app is not detected, shows the wrong status, or its update source is wrong
+title: "[App]: "
+labels: [catalog]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping the software catalog grow. Please describe **one app** per issue, and
+        don't paste your whole software list or personal file paths.
+  - type: input
+    id: app
+    attributes:
+      label: App name and version
+      placeholder: Example App 2.4.1
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Where did you get it?
+      description: Developer website (link), App Store, Homebrew, Setapp, Steam, a package manager…
+    validations:
+      required: true
+  - type: input
+    id: bundle
+    attributes:
+      label: Bundle identifier (optional)
+      description: Shown in Update Atlas's inspector, or run `mdls -name kMDItemCFBundleIdentifier "/Applications/Example App.app"`.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you see, and what did you expect?
+      description: For example "shows Not verified, but the developer publishes releases at …".
+    validations:
+      required: true
+  - type: input
+    id: release
+    attributes:
+      label: Official release notes or download page (optional)

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "catalogID": "community",
+  "revision": 1,
+  "generatedAt": "2026-09-15T00:00:00Z",
+  "expiresAt": "2026-09-22T00:00:00Z",
+  "entries": [
+    {
+      "id": "example-sparkle-app",
+      "displayName": "Example App",
+      "publisher": "Example Company",
+      "match": {
+        "bundleIdentifiers": ["com.example.app"],
+        "teamIdentifiers": ["ABCDE12345"],
+        "pathSuffixes": ["/Example App.app"]
+      },
+      "mechanism": {
+        "type": "sparkle",
+        "name": "Sparkle",
+        "feedURL": "https://example.com/appcast.xml",
+        "managerBundleIdentifier": null,
+        "providers": [
+          {
+            "type": "sparkleAppcast",
+            "url": "https://example.com/appcast.xml",
+            "channel": "stable",
+            "releaseChannel": "stable"
+          },
+          {
+            "type": "githubLatestRelease",
+            "url": "https://api.github.com/repos/example/example-app/releases/latest",
+            "channel": "stable",
+            "releaseChannel": "stable"
+          }
+        ]
+      },
+      "support": "supported",
+      "vendorURL": "https://example.com/",
+      "notes": "Example only. Replace this entry in the published catalog."
+    }
+  ]
+}

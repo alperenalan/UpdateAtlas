@@ -1,0 +1,37 @@
+name: Bug report
+description: Report incorrect detection or unexpected application behavior
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Please remove personal data and secrets from logs before attaching them.
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: Update Atlas version
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Detection evidence
+      description: Include the affected app's bundle identifier, version, mechanism, and evidence shown in the inspector.

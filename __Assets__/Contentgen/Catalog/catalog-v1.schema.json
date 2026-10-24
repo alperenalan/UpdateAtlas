@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/alperenalan/UpdateAtlas/main/__Assets__/Contentgen/Catalog/catalog-v1.schema.json",
+  "title": "Update Atlas Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "catalogID", "revision", "generatedAt", "entries"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "catalogID": { "type": "string", "minLength": 1 },
+    "revision": { "type": "integer", "minimum": 0 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": ["string", "null"], "format": "date-time" },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "httpsURL": {
+      "type": ["string", "null"],
+      "pattern": "^https://"
+    },
+    "requiredHTTPSURL": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "versionProvider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "url"],
+      "properties": {
+        "type": {
+          "enum": ["sparkleAppcast", "chromeVersionHistory", "githubLatestRelease", "platformDownloadPage", "githubCommitCompare", "electronYAML", "visualStudioCode", "blenderDownloadPage", "homebrewCask", "androidStudioReleasePage", "canonSupportRelease", "appleAppStoreLookup", "jsonVersion", "visualStudioMarketplace", "minecraftVersionManifest"]
+        },
+        "url": { "$ref": "#/$defs/requiredHTTPSURL" },
+        "channel": { "type": ["string", "null"] },
+        "identifier": { "type": ["string", "null"] },
+        "targetPlatform": { "type": ["string", "null"] },
+        "hostVersion": { "type": ["string", "null"] },
+        "includePrerelease": { "type": ["boolean", "null"] },
+        "versionPrefix": { "type": ["string", "null"] },
+        "versionRegex": { "type": ["string", "null"] },
+        "releaseChannel": {
+          "type": ["string", "null"],
+          "description": "Normalized release track: stable, lts, rc, beta, alpha, canary, nightly, or a vendor-defined value."
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "match", "mechanism", "support"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "displayName": { "type": ["string", "null"] },
+        "publisher": { "type": ["string", "null"], "minLength": 1, "maxLength": 120 },
+        "match": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "bundleIdentifiers": {
+              "type": ["array", "null"],
+              "minItems": 1,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "teamIdentifiers": {
+              "type": ["array", "null"],
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "pathSuffixes": {
+              "type": ["array", "null"],
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "executableNames": {
+              "type": ["array", "null"],
+              "items": { "type": "string", "minLength": 1 }
+            }
+          },
+          "anyOf": [
+            {
+              "properties": { "bundleIdentifiers": { "type": "array", "minItems": 1 } },
+              "required": ["bundleIdentifiers"]
+            },
+            {
+              "properties": { "pathSuffixes": { "type": "array", "minItems": 1 } },
+              "required": ["pathSuffixes"]
+            },
+            {
+              "properties": { "executableNames": { "type": "array", "minItems": 1 } },
+              "required": ["executableNames"]
+            }
+          ],
+          "if": {
+            "properties": { "bundleIdentifiers": { "type": "array", "minItems": 1 } },
+            "required": ["bundleIdentifiers"]
+          },
+          "else": {
+            "properties": { "teamIdentifiers": { "type": "array", "minItems": 1 } },
+            "required": ["teamIdentifiers"]
+          }
+        },
+        "mechanism": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "name"],
+          "properties": {
+            "type": {
+              "enum": ["sparkle", "appStore", "homebrew", "npm", "python", "pipx", "uvTool", "cargo", "googleUpdater", "squirrel", "githubReleases", "ideExtension", "externalManager", "system", "website", "publisherCLIInstaller", "unknown"]
+            },
+            "name": { "type": "string", "minLength": 1 },
+            "feedURL": { "$ref": "#/$defs/httpsURL" },
+            "managerBundleIdentifier": { "type": ["string", "null"] },
+            "provider": {
+              "anyOf": [
+                { "$ref": "#/$defs/versionProvider" },
+                { "type": "null" }
+              ]
+            },
+            "providers": {
+              "type": ["array", "null"],
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/versionProvider" }
+            }
+          }
+        },
+        "support": {
+          "enum": ["supported", "managedExternally", "needsCatalog", "unsupported"]
+        },
+        "vendorURL": { "$ref": "#/$defs/httpsURL" },
+        "openSource": { "type": ["boolean", "null"] },
+        "sourceCodeURL": { "$ref": "#/$defs/httpsURL" },
+        "releaseNotesURL": { "$ref": "#/$defs/httpsURL" },
+        "notes": { "type": ["string", "null"] }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "support": { "const": "supported" }
+            },
+            "required": ["support", "mechanism"]
+          },
+          "then": {
+            "properties": {
+              "mechanism": {
+                "anyOf": [
+                  {
+                    "properties": { "provider": { "type": "object" } },
+                    "required": ["provider"]
+                  },
+                  {
+                    "properties": { "providers": { "type": "array", "minItems": 1 } },
+                    "required": ["providers"]
+                  },
+                  {
+                    "properties": {
+                      "feedURL": { "type": "string", "pattern": "^https://" }
+                    },
+                    "required": ["feedURL"]
+                  },
+                  {
+                    "properties": { "type": { "const": "appStore" } },
+                    "required": ["type"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

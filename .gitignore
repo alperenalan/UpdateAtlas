@@ -1,0 +1,68 @@
+# ---- scratch and finished builds
+.temporary_files/
+__Builds__/
+
+# ---- __Assets__ buckets that are never tracked — one line each, never __Assets__ wholesale
+__Assets__/Design/
+
+# ---- the regenerable half of the mixed buckets
+__Assets__/Contentgen/Raw/
+# catalog working files: generated output and private drafts stay out of the public contract
+__Assets__/Contentgen/Catalog/generated/
+__Assets__/Contentgen/Catalog/private/
+
+# ---- secrets: never, anywhere in the tree. Each real secrets file has a committed
+# ---- example beside it (Secrets.example.xcconfig, .env.example) with the keys and no values.
+*.p8
+*credentials*.sh
+# …but not the committed template beside it, which holds placeholders only
+!*credentials.example.sh
+Secrets.xcconfig
+.env
+.env.*
+!.env.example
+.sentryclirc
+*.keystore
+*.jks
+*.mobileprovision
+# local overrides, such as a personal catalog endpoint
+*.local.json
+
+# ---- macOS
+.DS_Store
+
+# ---- Apple
+xcuserdata/
+*.xcuserstate
+DerivedData/
+.build/
+.swiftpm/
+# XcodeGen output — edit Apple/project.yml and regenerate
+Apple/UpdateAtlas.xcodeproj/
+Apple/UpdateAtlas/Info.plist
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# ---- editors
+.idea/
+.vscode/
+*.swp
+
+# ---- generated agent instructions and local tool state
+/AGENTS.md
+/CLAUDE.md
+.wrangler/
+.claude/
+
+# ---- maintainer and AI-agent working notes: kept on this Mac, backed up in the private
+# ---- UpdateAtlas-archive repository, never published with the source
+/PROJECT_*.md
+/.doclinks-ignore
+__Assets__/Docs/History/
+__Assets__/Docs/plans/
+__Assets__/Docs/qa/
+__Assets__/Docs/Backlog.md
+__Assets__/Docs/design-qa*.md
+__Assets__/Docs/Publishing.md
+__Assets__/Docs/Self-Maintenance.md

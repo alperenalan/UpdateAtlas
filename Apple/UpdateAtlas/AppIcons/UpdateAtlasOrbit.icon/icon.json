@@ -1,0 +1,60 @@
+{
+  "features" : [
+    "refractivity"
+  ],
+  "fill" : {
+    "automatic-gradient" : "extended-srgb:0.28627,0.25098,0.84314,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "01-tiles.svg",
+          "name" : "Applications"
+        }
+      ],
+      "name" : "Applications",
+      "refractivity" : {
+        "depth" : 0.14,
+        "enabled" : true,
+        "strength" : 0.3
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.26
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.2
+      }
+    },
+    {
+      "layers" : [
+        {
+          "image-name" : "02-orbit.svg",
+          "name" : "Discovery Orbit"
+        }
+      ],
+      "name" : "Discovery Orbit",
+      "refractivity" : {
+        "depth" : 0.08,
+        "enabled" : true,
+        "strength" : 0.22
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.2
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.1
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

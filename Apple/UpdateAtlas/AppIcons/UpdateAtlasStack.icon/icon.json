@@ -1,0 +1,82 @@
+{
+  "features" : [
+    "refractivity"
+  ],
+  "fill" : {
+    "automatic-gradient" : "extended-srgb:0.00000,0.53333,0.43137,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "01-bottom.svg",
+          "name" : "Archive"
+        }
+      ],
+      "name" : "Archive",
+      "refractivity" : {
+        "depth" : 0.18,
+        "enabled" : true,
+        "strength" : 0.34
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.3
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.24
+      }
+    },
+    {
+      "layers" : [
+        {
+          "image-name" : "02-middle.svg",
+          "name" : "Catalog"
+        }
+      ],
+      "name" : "Catalog",
+      "refractivity" : {
+        "depth" : 0.12,
+        "enabled" : true,
+        "strength" : 0.28
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.24
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.18
+      }
+    },
+    {
+      "layers" : [
+        {
+          "image-name" : "03-rising.svg",
+          "name" : "Available Update"
+        }
+      ],
+      "name" : "Available Update",
+      "refractivity" : {
+        "depth" : 0.08,
+        "enabled" : true,
+        "strength" : 0.22
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.2
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.1
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

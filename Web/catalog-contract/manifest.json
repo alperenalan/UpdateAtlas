@@ -1,0 +1,39 @@
+{
+  "appcast": {
+    "builds": [],
+    "bytes": 799,
+    "differs_from_baseline": false,
+    "sha256": "ffbd0e935de07ed04ae0b1bbf5640ca0f07e8b38e394a15a7211c0d1d8f225ab"
+  },
+  "catalog": {
+    "added_rules": 317,
+    "bytes": 328266,
+    "changed_rules": 3,
+    "differs_from_baseline": true,
+    "revision": 14,
+    "rules": 364,
+    "sha256": "2333af2064ab688a2cda8bb7cc9ef0c94edcb74c973dc8463ec087fff965da30"
+  },
+  "catalog_contract": {
+    "Contentgen/Catalog/BootstrapCatalog.json": {
+      "bytes": 328266,
+      "sha256": "2333af2064ab688a2cda8bb7cc9ef0c94edcb74c973dc8463ec087fff965da30"
+    },
+    "Contentgen/Catalog/catalog-v1.schema.json": {
+      "bytes": 6569,
+      "sha256": "31bd0e01ef0e31f78f4fd8ee4ae1a79a9b3df0ff433013f9b03800f927706099"
+    },
+    "Scripts/validate_channels.mjs": {
+      "bytes": 8990,
+      "sha256": "e659b759b21f14bf396a1436f2dfbae5b3e403c8e4358b29e61ba9ed2134fdef"
+    },
+    "Scripts/validate_site_catalog.mjs": {
+      "bytes": 2075,
+      "sha256": "27ef63c77a952fdb9f67b407c9f1fceafcd9a6fa46e296453c82d92dbba4f138"
+    }
+  },
+  "destinations": {
+    "product_catalog": "product-site/Web/site/api/update-atlas/catalog-v1.json",
+    "product_site": "product-site/Web/site/appcast.xml"
+  }
+}

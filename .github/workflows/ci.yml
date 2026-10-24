@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: macos-15
+    defaults:
+      run:
+        working-directory: Apple
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Validate localization catalog and selected-language usage
+        working-directory: .
+        run: python3 __Assets__/Scripts/Apple/check_localizations.py
+      - name: Require Codex and Gemini review for new or changed translations
+        working-directory: .
+        run: python3 __Assets__/Scripts/Apple/check_localization_release.py --scope changed
+      - name: Verify generated seven-language site is current
+        working-directory: .
+        run: python3 Web/generate_site.py --check
+      - name: Verify staged static catalog matches its publication contract
+        working-directory: .
+        run: node Web/catalog-contract/Scripts/validate_site_catalog.mjs
+      - name: Check tracked public-source boundary
+        working-directory: .
+        run: python3 __Assets__/Scripts/check_public_tree.py
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate project
+        run: xcodegen generate
+      - name: Test
+        run: >-
+          xcodebuild
+          -project UpdateAtlas.xcodeproj
+          -scheme UpdateAtlas
+          -configuration Debug
+          -derivedDataPath "$RUNNER_TEMP/UpdateAtlasDerivedData"
+          CODE_SIGNING_ALLOWED=NO
+          test
+      - name: Verify Apple Silicon binary
+        run: >-
+          test
+          "$(lipo -archs "$RUNNER_TEMP/UpdateAtlasDerivedData/Build/Products/Debug/Update Atlas.app/Contents/MacOS/Update Atlas")"
+          = "arm64"
+      - name: Test distribution channel validation
+        working-directory: .
+        run: node --test __Assets__/Scripts/tests/*.test.mjs
+      - name: Validate bundled catalog against published v1 contract
+        working-directory: .
+        run: >-
+          node --input-type=module -e
+          "import fs from 'node:fs'; import { validateCatalog } from './__Assets__/Scripts/validate_channels.mjs';
+          console.log(validateCatalog(fs.readFileSync('Apple/UpdateAtlas/Resources/BootstrapCatalog.json')));"
+      - name: Test archive extraction boundary
+        working-directory: .
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s __Assets__/Scripts/tests -p "test_*.py"
