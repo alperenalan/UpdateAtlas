@@ -26881,46 +26881,6 @@
         }
       }
     },
-    "Game clients, Wine bottles & Virtual Machines" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oyun İstemcileri, Wine Ortamları ve Sanal Makineler"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Игровые клиенты, среды Wine и виртуальные машины"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spiele-Clients, Wine-Umgebungen & virtuelle Maschinen"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clients de jeu, bouteilles Wine et machines virtuelles"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "游戏客户端、Wine 容器与虚拟机"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ゲームクライアント、Wine 環境、仮想マシン"
-          }
-        }
-      }
-    },
     "GitHub Commit Compare" : {
       "localizations" : {
         "tr" : {
@@ -28517,46 +28477,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "読み取り専用のローカルインベントリスキャン（JSON 出力）"
-          }
-        }
-      }
-    },
-    "Read-only scans & confirmed updates" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Salt okunur taramalar ve doğrulanmış güncellemeler"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сканирование только для чтения и подтверждённые обновления"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scans nur mit Lesezugriff & bestätigte Updates"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Analyses en lecture seule et mises à jour confirmées"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "只读扫描与已确认更新"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "読み取り専用スキャンと確認済みアップデート"
           }
         }
       }
@@ -32285,6 +32205,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "インストール済みのバージョンは、パッケージマネージャーが提供する最新リリースより新しいため、アップデートは表示されません。"
+          }
+        }
+      }
+    },
+    "Game clients, Wine bottles & virtual machines" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oyun istemcileri, Wine ortamları ve sanal makineler"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игровые клиенты, среды Wine и виртуальные машины"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spiele-Clients, Wine-Umgebungen & virtuelle Maschinen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clients de jeu, bouteilles Wine et machines virtuelles"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏客户端、Wine 容器与虚拟机"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲームクライアント、Wine 環境、仮想マシン"
+          }
+        }
+      }
+    },
+    "Read-only scans & updates you approve" : {
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salt okunur tarama, onayınızla güncelleme"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сканирование в режиме «только чтение» и обновления с вашего согласия"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scans nur mit Lesezugriff & Updates nach deiner Zustimmung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyses en lecture seule et mises à jour avec votre accord"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只读扫描，更新需您批准"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "読み取り専用スキャン、アップデートは承認制"
           }
         }
       }

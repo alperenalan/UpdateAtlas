@@ -54,6 +54,8 @@ struct InventoryTableCell: View {
                     Text(subtitle(app)).font(isSpacious ? .caption : .caption2)
                         .foregroundStyle(.secondary).lineLimit(1)
                 }
+                // The name claims space first; action buttons collapse to their icon instead.
+                .layoutPriority(1)
                 Spacer(minLength: 4)
                 if ManagerUpdatePolicy.offersInlineUpdate(for: app) {
                     Button { viewModel.requestUpdate(app) } label: {
@@ -68,18 +70,14 @@ struct InventoryTableCell: View {
                     .accessibilityLabel(String(format: String(localized: "Update %@", bundle: AppL10n.bundle, locale: AppL10n.locale), app.name))
                     .help(app.mechanismName)
                 } else if ManagerUpdatePolicy.offersInlineAppStore(for: app) {
-                    Button { viewModel.openAppStore(for: app) } label: {
-                        Label("App Store", systemImage: "bag")
-                            .fontWeight(.medium)
+                    AdaptiveInlineButton(title: "App Store", systemImage: "bag") {
+                        viewModel.openAppStore(for: app)
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
-                    .fixedSize()
                     .disabled(viewModel.isScanning)
                     .accessibilityLabel(String(localized: "Open in App Store:", bundle: AppL10n.bundle, locale: AppL10n.locale) + " " + app.name)
                     .help(String(localized: "Open this application's page in the Mac App Store", bundle: AppL10n.bundle, locale: AppL10n.locale))
                 } else if let openAction = viewModel.inlineOpenAction(for: app) {
-                    Button {
+                    AdaptiveInlineButton(title: inlineActionTitle(openAction), systemImage: inlineActionSymbol(openAction)) {
                         switch openAction {
                         case .openManager: viewModel.openManager(for: app)
                         case .openApplication: viewModel.openApplication(app)
@@ -91,18 +89,7 @@ struct InventoryTableCell: View {
                             if let url = MenuBarUpdateAction.safeWebURL(app.vendorURL) { viewModel.openURL(url) }
                         default: break
                         }
-                    } label: {
-                        if openAction == .openReleasePage {
-                            Label("View Version Changelog", systemImage: "doc.text").fontWeight(.medium)
-                        } else if openAction == .openWebsite {
-                            Label("Open Website", systemImage: "safari").fontWeight(.medium)
-                        } else {
-                            Label("Open Application", systemImage: "arrow.up.forward.app").fontWeight(.medium)
-                        }
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
-                    .fixedSize()
                     .disabled(viewModel.isScanning || directUpdater.activeApplicationID != nil)
                     .accessibilityLabel(inlineActionAccessibilityLabel(openAction, app: app))
                 }
@@ -129,6 +116,22 @@ struct InventoryTableCell: View {
         }
     }
 
+    private func inlineActionTitle(_ action: MenuBarUpdateAction) -> LocalizedStringKey {
+        switch action {
+        case .openReleasePage: "View Version Changelog"
+        case .openWebsite: "Open Website"
+        default: "Open Application"
+        }
+    }
+
+    private func inlineActionSymbol(_ action: MenuBarUpdateAction) -> String {
+        switch action {
+        case .openReleasePage: "doc.text"
+        case .openWebsite: "safari"
+        default: "arrow.up.forward.app"
+        }
+    }
+
     private func subtitle(_ app: InstalledApplication) -> String {
         var parts = [app.kind.title]
         if let manager = app.parentManagerName { parts.append(String(localized: "Managed by", bundle: AppL10n.bundle, locale: AppL10n.locale) + " " + manager) }
@@ -145,5 +148,25 @@ struct InventoryTableCell: View {
         }
         let name = action == .openManager ? app.parentManagerName ?? app.name : app.name
         return String(format: String(localized: "%@: %@", bundle: AppL10n.bundle, locale: AppL10n.locale), title, name)
+    }
+}
+
+/// A bordered row action that shows its title when the row has room and only its symbol
+/// (with the title as a tooltip) when the software name would otherwise be cut off.
+private struct AdaptiveInlineButton: View {
+    let title: LocalizedStringKey
+    let systemImage: String
+    let action: () -> Void
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            Button(action: action) { Label(title, systemImage: systemImage).fontWeight(.medium) }
+                .fixedSize()
+            Button(action: action) { Label(title, systemImage: systemImage).labelStyle(.iconOnly) }
+                .fixedSize()
+                .help(Text(title))
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.small)
     }
 }

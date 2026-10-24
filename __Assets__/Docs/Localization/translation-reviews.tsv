@@ -12821,3 +12821,29 @@ app:The installed version could not be read, so it cannot be compared with the l
 app:Verified means the latest version was confirmed. Unverified includes checks that are pending, failed, or handled by another app.	fr	bd9993c957dedc55	a29902395ad3f92c	google:gemini-4-argon-high	2026-10-24	ok	
 app:Software confirmed to have the latest version.	fr	8cb2b09e4e775713	d698e208cf93e6c9	anthropic:claude-opus-5.5	2026-10-24	ok	Resolves both readers: grammatical and says the installed version is current.
 app:Software confirmed to have the latest version.	fr	8cb2b09e4e775713	d698e208cf93e6c9	google:gemini-4-argon-high	2026-10-24	ok	
+app:Game clients, Wine bottles & virtual machines	tr	a35e1168491825b9	92b4e3eb07e02045	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Game clients, Wine bottles & virtual machines	ru	c722151f711e1fa0	92b4e3eb07e02045	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Game clients, Wine bottles & virtual machines	de	8d77b835eab73b86	92b4e3eb07e02045	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Game clients, Wine bottles & virtual machines	fr	dded939f07d9d475	92b4e3eb07e02045	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Game clients, Wine bottles & virtual machines	zh-Hans	a9d7c7e506ab39f8	92b4e3eb07e02045	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Game clients, Wine bottles & virtual machines	ja	45762b273eaea188	92b4e3eb07e02045	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Read-only scans & updates you approve	tr	085e553662564d3f	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Read-only scans & updates you approve	ru	79675b01a83cf439	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Read-only scans & updates you approve	de	8a9fc2fcb64f9d76	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Read-only scans & updates you approve	fr	220c07671d3f39f3	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Read-only scans & updates you approve	zh-Hans	7ea0e66c1cee3469	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Read-only scans & updates you approve	ja	4ee2bb2c21d7af97	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Onboarding copy checked against OnboardingView and the update flow.
+app:Game clients, Wine bottles & virtual machines	zh-Hans	a9d7c7e506ab39f8	92b4e3eb07e02045	google:gemini-4-argon-high	2026-10-25	ok	
+app:Read-only scans & updates you approve	zh-Hans	7ea0e66c1cee3469	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	ok	
+app:Game clients, Wine bottles & virtual machines	de	8d77b835eab73b86	92b4e3eb07e02045	google:gemini-4-argon-high	2026-10-25	ok	
+app:Read-only scans & updates you approve	de	8a9fc2fcb64f9d76	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	ok	
+app:Game clients, Wine bottles & virtual machines	ja	45762b273eaea188	92b4e3eb07e02045	google:gemini-4-argon-high	2026-10-25	ok	
+app:Read-only scans & updates you approve	ja	4ee2bb2c21d7af97	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	ok	
+app:Game clients, Wine bottles & virtual machines	tr	a35e1168491825b9	92b4e3eb07e02045	google:gemini-4-argon-high	2026-10-25	ok	
+app:Read-only scans & updates you approve	tr	085e553662564d3f	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	ok	
+app:Game clients, Wine bottles & virtual machines	fr	dded939f07d9d475	92b4e3eb07e02045	google:gemini-4-argon-high	2026-10-25	ok	
+app:Read-only scans & updates you approve	fr	220c07671d3f39f3	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	ok	
+app:Game clients, Wine bottles & virtual machines	ru	c722151f711e1fa0	92b4e3eb07e02045	google:gemini-4-argon-high	2026-10-25	ok	
+app:Read-only scans & updates you approve	ru	79675b01a83cf439	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	fix	"[C22, C23] «Сканирование только для чтения и обновления» is a calque of ""read-only scans"" and creates a grammatical ambiguity in Russian because «обновления» parses as genitive singular coordinated with «чтения» (""scanning only for reading and updating""), reversing the read-only meaning. Replacement: Сканирование в режиме «только чтение» и обновления с вашего согласия"
+app:Read-only scans & updates you approve	ru	d46709839fca6aee	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	ok	Correction proposed by this reader.
+app:Read-only scans & updates you approve	ru	d46709839fca6aee	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Correction proposed by Gemini; read by both families.

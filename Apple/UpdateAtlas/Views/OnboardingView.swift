@@ -134,7 +134,7 @@ struct OnboardingView: View {
             VStack(alignment: .leading, spacing: 0) {
                 featureRow(
                     symbol: "checkmark.shield",
-                    title: "Read-only scans & confirmed updates",
+                    title: "Read-only scans & updates you approve",
                     detail: "Scans only report updates. Supported apps can be updated with Sparkle, Homebrew, or Microsoft AutoUpdate after you confirm, or opened directly in the App Store."
                 )
                 Divider()
@@ -146,7 +146,7 @@ struct OnboardingView: View {
                 Divider()
                 featureRow(
                     symbol: "square.stack.3d.up",
-                    title: "Game clients, Wine bottles & Virtual Machines",
+                    title: "Game clients, Wine bottles & virtual machines",
                     detail: "Tracks Steam, Epic, GOG, Battle.net, CrossOver/Whisky Windows bottles, and UTM/VMware/Parallels virtual machines under their parent managers."
                 )
             }

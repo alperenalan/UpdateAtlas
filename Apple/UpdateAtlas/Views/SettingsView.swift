@@ -26,7 +26,6 @@ struct SettingsView: View {
     @State private var launchAtLoginEnabled = false
     @AppStorage(LaunchAtLoginService.openInMenuBarOnlyKey)
     private var openInMenuBarOnly = LaunchAtLoginService.defaultOpenInMenuBarOnly
-    @State private var isAccentPickerPresented = false
     @State private var launchAtLoginError: String?
 
     var body: some View {
@@ -230,57 +229,17 @@ struct SettingsView: View {
 
             Section("Accent Color") {
                 LabeledContent("Accent color") {
-                    Button {
-                        isAccentPickerPresented = true
-                    } label: {
-                        HStack(spacing: 8) {
-                            Circle()
-                                .fill(selectedAccentColor.previewColor)
-                                .frame(width: 12, height: 12)
-                            Text(selectedAccentColor.title)
-                            Image(systemName: "chevron.up.chevron.down")
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .popover(isPresented: $isAccentPickerPresented, arrowEdge: .bottom) {
-                        ScrollView {
-                            VStack(spacing: 2) {
-                                ForEach(AppAccentColor.allCases) { accent in
-                                    Button {
-                                        accentColorRawValue = accent.rawValue
-                                        isAccentPickerPresented = false
-                                    } label: {
-                                        HStack(spacing: 10) {
-                                            Circle()
-                                                .fill(accent.previewColor)
-                                                .frame(width: 14, height: 14)
-                                            Text(accent.title)
-                                            Spacer()
-                                            if accent.rawValue == accentColorRawValue {
-                                                Image(systemName: "checkmark")
-                                                    .foregroundStyle(.tint)
-                                            }
-                                        }
-                                        .contentShape(Rectangle())
-                                        .padding(.horizontal, 10)
-                                        .padding(.vertical, 5)
-                                    }
-                                    .buttonStyle(.plain)
-                                    .background {
-                                        if accent.rawValue == accentColorRawValue {
-                                            RoundedRectangle(cornerRadius: 6)
-                                                .fill(selectedAccentColor.previewColor.opacity(0.16))
-                                        }
-                                    }
-                                    .accessibilityAddTraits(
-                                        accent.rawValue == accentColorRawValue ? .isSelected : []
-                                    )
+                    VStack(alignment: .trailing, spacing: 6) {
+                        HStack(spacing: 7) {
+                            ForEach(AppAccentColor.allCases) { accent in
+                                AccentSwatch(accent: accent, isSelected: accent == selectedAccentColor) {
+                                    accentColorRawValue = accent.rawValue
                                 }
                             }
-                            .padding(8)
                         }
-                        .frame(width: 210, height: 345)
+                        Text(selectedAccentColor.title)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
                 }
 
@@ -350,5 +309,42 @@ struct SettingsView: View {
 
     private var selectedAccentColor: AppAccentColor {
         AppAccentColor(rawValue: accentColorRawValue) ?? .system
+    }
+}
+
+/// One colour dot in the System Settings style: the selected dot carries an inner white mark,
+/// and System shows the multicolour dot macOS uses for "follow the system accent".
+private struct AccentSwatch: View {
+    let accent: AppAccentColor
+    let isSelected: Bool
+    let select: () -> Void
+
+    var body: some View {
+        Button(action: select) {
+            Circle()
+                .fill(fill)
+                .frame(width: 16, height: 16)
+                .overlay(Circle().strokeBorder(.black.opacity(0.12), lineWidth: 0.5))
+                .overlay {
+                    if isSelected {
+                        Circle().fill(.white).frame(width: 6, height: 6)
+                    }
+                }
+                .padding(2)
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .help(accent.title)
+        .accessibilityLabel(accent.title)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    private var fill: AnyShapeStyle {
+        if accent == .system {
+            AnyShapeStyle(AngularGradient(colors: [.red, .orange, .yellow, .green, .blue, .purple, .pink, .red],
+                                          center: .center))
+        } else {
+            AnyShapeStyle(accent.previewColor)
+        }
     }
 }
