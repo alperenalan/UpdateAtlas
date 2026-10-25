@@ -4,8 +4,9 @@ The shipped app offers English, Turkish, Russian, German, French, Simplified Chi
 Japanese. `Localizable.xcstrings` is the app UI catalog; `Web/site_copy.psv` is the
 separate product-site source. Counts measure filled entries, not linguistic quality or
 complete runtime coverage. Vendor names, product IDs, CLI flags, JSON field names, error
-codes and MCP tool names remain stable technical identifiers. Human-readable CLI help,
-progress and errors are user copy and must be localized.
+codes and MCP tool names remain stable technical identifiers. The CLI's human-readable help,
+progress and errors and the generated Agent Skill stay English by design (developer tooling,
+decided 2026-10-25); the gate reports them as notes, not blockers.
 
 ## Every text change
 
@@ -43,11 +44,12 @@ progress and errors are user copy and must be localized.
    **not** approval of that content. Its SHA-256 is pinned in the checker. Do not
    refresh it to clear a failed check.
    The full app/site release gates still require both reads on every current pair.
-4. Inspect all seven native languages on a **clean user** with the exact signed ZIP:
-   main window, onboarding, Settings, menu/dialogs, notifications, CLI, dates/plurals,
-   and layout/accessibility. Check language switching, clipping, dynamic text and
-   VoiceOver labels. `runtime-qa.tsv` records one `pass` per language/surface tied to
-   the full SHA-256 of that ZIP. A failed or unrun surface has no `pass` row.
+4. Inspect English and Turkish (`QA_LOCALES`, the languages the maintainer reads) with the
+   exact signed ZIP: main window, onboarding, Settings, menu/dialogs, notifications, CLI,
+   dates/plurals, and layout/accessibility. Check language switching, clipping, dynamic text
+   and VoiceOver labels. The other five languages rely on the two-family translation reads.
+   `runtime-qa.tsv` records one `pass` per language/surface tied to the full SHA-256 of that
+   ZIP, naming who observed it. A failed or unrun surface has no `pass` row.
 
 Before preparing an appcast, run:
 

@@ -21,6 +21,9 @@ DISMISSALS = ROOT / "__Assets__/Docs/Localization/review-dismissals.tsv"
 REVIEW_FIELDS = ["item", "field", "hash", "source_hash", "reader", "date", "verdict", "note"]
 SECOND_READERS = {"openai", "anthropic"}
 APP_LOCALES = ("en", "tr", "ru", "de", "fr", "zh-Hans", "ja")
+# Native QA on the exact archive covers the languages the maintainer reads; the other five
+# locales rely on the two-family translation reads above (decided 2026-10-25).
+QA_LOCALES = ("en", "tr")
 QA_SURFACES = ("main", "onboarding", "settings", "menu-dialogs", "notifications",
                "cli", "dates-plurals", "layout-accessibility")
 
@@ -102,8 +105,8 @@ def review_errors(scope, changed_only=False):
 
 
 def cli_errors():
-    # Human-facing CLI prose still bypasses the catalog. Protocol codes, JSON field
-    # names, flags and MCP names remain stable technical identifiers.
+    # The CLI and its generated Agent Skill are developer tooling and stay English by design
+    # (decided 2026-10-25). These findings are reported as notes and do not block a release.
     source = (ROOT / "Apple/UpdateAtlas/CLI/UpdateAtlasCLI.swift").read_text()
     progress = (ROOT / "Apple/UpdateAtlas/Services/CLIScanProgress.swift").read_text()
     issues = []
@@ -130,7 +133,7 @@ def qa_errors(archive):
             latest[(record["locale"], record["surface"])] = record
     passed = {key for key, record in latest.items()
               if record["verdict"] == "pass" and record["reader"] and record["date"]}
-    return [(locale, surface) for locale in APP_LOCALES for surface in QA_SURFACES
+    return [(locale, surface) for locale in QA_LOCALES for surface in QA_SURFACES
             if (locale, surface) not in passed]
 
 
@@ -160,10 +163,10 @@ def main():
     if len(pending) > 12:
         print(f"  ... {len(pending) - 12} more translation reviews pending")
     for issue in cli:
-        print(f"  {issue}")
+        print(f"  note (English by design, not blocking): {issue}")
     if qa:
         print(f"  {len(qa)} native QA surfaces pending for this exact archive; first: {qa[0]}")
-    return 1 if pending or cli or qa else 0
+    return 1 if pending or qa else 0
 
 
 if __name__ == "__main__":

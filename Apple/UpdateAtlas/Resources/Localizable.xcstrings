@@ -5526,7 +5526,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Katalog URL'si"
+            "value" : "Katalog URL’si"
           }
         },
         "ru" : {
@@ -13166,7 +13166,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Blender'ın resmi indirme sayfasında daha yeni bir macOS sürümü mevcut."
+            "value" : "Blender’ın resmi indirme sayfasında daha yeni bir macOS sürümü mevcut."
           }
         },
         "ru" : {
@@ -13366,7 +13366,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Katalog eşleştirme Ayarlar'da devre dışı bırakıldı."
+            "value" : "Katalog eşleştirme Ayarlar’da devre dışı bırakıldı."
           }
         },
         "ru" : {
@@ -22246,7 +22246,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google'ın Android Studio kararlı sürüm sayfası karşılaştırılabilir bir sürüm içermiyordu."
+            "value" : "Google’ın Android Studio kararlı sürüm sayfası karşılaştırılabilir bir sürüm içermiyordu."
           }
         },
         "ru" : {
@@ -22326,7 +22326,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google'ın Android Studio kararlı sürüm sayfası daha yeni bir sürüm bildiriyor."
+            "value" : "Google’ın Android Studio kararlı sürüm sayfası daha yeni bir sürüm bildiriyor."
           }
         },
         "ru" : {
@@ -22526,7 +22526,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Homebrew'un ek Android Studio paket revizyonu, kurulu IDE sürümüyle karşılaştırılamıyor."
+            "value" : "Homebrew’un ek Android Studio paket revizyonu, kurulu IDE sürümüyle karşılaştırılamıyor."
           }
         },
         "ru" : {
@@ -22766,7 +22766,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Canon'un resmi destek sayfası daha yeni bir IJ Scan Utility2 sürümünü doğruluyor."
+            "value" : "Canon’un resmi destek sayfası daha yeni bir IJ Scan Utility2 sürümünü doğruluyor."
           }
         },
         "ru" : {
@@ -22846,7 +22846,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dell'in yüklü sürümü ile katalog sürümü güvenli bir şekilde karşılaştırılamadı."
+            "value" : "Dell’in yüklü sürümü ile katalog sürümü güvenli bir şekilde karşılaştırılamadı."
           }
         },
         "ru" : {
@@ -22966,7 +22966,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dell'in yüklü yazılımı izlenen sürüm ailesiyle eşleşiyor."
+            "value" : "Dell’in yüklü yazılımı izlenen sürüm ailesiyle eşleşiyor."
           }
         },
         "ru" : {
@@ -25206,7 +25206,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terminal'de update-atlas bulunamazsa kabuk PATH değişkeninize ~/.local/bin yolunu ekleyin."
+            "value" : "Terminal’de update-atlas bulunamazsa kabuk PATH değişkeninize ~/.local/bin yolunu ekleyin."
           }
         },
         "ru" : {
@@ -25566,7 +25566,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Katalog URL'si HTTPS kullanmalıdır: %@."
+            "value" : "Katalog URL’si HTTPS kullanmalıdır: %@."
           }
         },
         "ru" : {

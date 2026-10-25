@@ -12847,3 +12847,25 @@ app:Game clients, Wine bottles & virtual machines	ru	c722151f711e1fa0	92b4e3eb07
 app:Read-only scans & updates you approve	ru	79675b01a83cf439	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	fix	"[C22, C23] «Сканирование только для чтения и обновления» is a calque of ""read-only scans"" and creates a grammatical ambiguity in Russian because «обновления» parses as genitive singular coordinated with «чтения» (""scanning only for reading and updating""), reversing the read-only meaning. Replacement: Сканирование в режиме «только чтение» и обновления с вашего согласия"
 app:Read-only scans & updates you approve	ru	d46709839fca6aee	ba55d3a755c08a2b	google:gemini-4-argon-high	2026-10-25	ok	Correction proposed by this reader.
 app:Read-only scans & updates you approve	ru	d46709839fca6aee	ba55d3a755c08a2b	anthropic:claude-opus-5.5	2026-10-25	ok	Correction proposed by Gemini; read by both families.
+app:Catalog URL	tr	7ef99654f221b1a7	0b4e0b8862c93813	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Blender's official download page reports a newer macOS release.	tr	56e49f24c03658dc	a836d4af24de5bbd	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Catalog matching is disabled in Settings.	tr	142cf9fc163c259c	877d2a848959663f	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Google's Android Studio stable release page did not contain a comparable version.	tr	e0ca4dd69c095649	4ef3a79ee0751ab3	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Google's Android Studio stable release page reports a newer release.	tr	33aa3e6def302042	8800bf45c222d86a	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Homebrew's extra Android Studio package revision is not comparable with the installed IDE release version.	tr	de5eb25a407223c7	5db61a72ecf1c099	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Canon's official support page confirms a newer IJ Scan Utility2 release.	tr	995f0f4e49003efe	4b67216c362e7405	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Dell's installed and catalog versions could not be safely compared.	tr	b7b0b6f9721c0ba9	e737e1427edae73a	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Dell's installed software matches the tracked release family.	tr	9ca714faefa0175c	a406ead00fd9f766	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Add ~/.local/bin to your shell PATH if update-atlas is not found in Terminal.	tr	626c2762a575c850	8c9bcc6ab79c981c	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Catalog URL must use HTTPS: %@.	tr	c26d62ec3b6601bc	dc5c269d4bda1a79	anthropic:claude-opus-5.5	2026-10-25	ok	Typographic apostrophe after a proper noun; wording unchanged.
+app:Add ~/.local/bin to your shell PATH if update-atlas is not found in Terminal.	tr	626c2762a575c850	8c9bcc6ab79c981c	google:gemini-4-argon-high	2026-10-25	ok	
+app:Blender's official download page reports a newer macOS release.	tr	56e49f24c03658dc	a836d4af24de5bbd	google:gemini-4-argon-high	2026-10-25	ok	
+app:Canon's official support page confirms a newer IJ Scan Utility2 release.	tr	995f0f4e49003efe	4b67216c362e7405	google:gemini-4-argon-high	2026-10-25	ok	
+app:Catalog URL	tr	7ef99654f221b1a7	0b4e0b8862c93813	google:gemini-4-argon-high	2026-10-25	ok	
+app:Catalog URL must use HTTPS: %@.	tr	c26d62ec3b6601bc	dc5c269d4bda1a79	google:gemini-4-argon-high	2026-10-25	ok	
+app:Catalog matching is disabled in Settings.	tr	142cf9fc163c259c	877d2a848959663f	google:gemini-4-argon-high	2026-10-25	ok	
+app:Dell's installed and catalog versions could not be safely compared.	tr	b7b0b6f9721c0ba9	e737e1427edae73a	google:gemini-4-argon-high	2026-10-25	ok	
+app:Dell's installed software matches the tracked release family.	tr	9ca714faefa0175c	a406ead00fd9f766	google:gemini-4-argon-high	2026-10-25	ok	
+app:Google's Android Studio stable release page did not contain a comparable version.	tr	e0ca4dd69c095649	4ef3a79ee0751ab3	google:gemini-4-argon-high	2026-10-25	ok	
+app:Google's Android Studio stable release page reports a newer release.	tr	33aa3e6def302042	8800bf45c222d86a	google:gemini-4-argon-high	2026-10-25	ok	
+app:Homebrew's extra Android Studio package revision is not comparable with the installed IDE release version.	tr	de5eb25a407223c7	5db61a72ecf1c099	google:gemini-4-argon-high	2026-10-25	ok	

@@ -100,7 +100,7 @@ class LocalizationReleaseTests(unittest.TestCase):
             archive.write_bytes(b"first signed archive")
             qa_file = Path(folder) / "qa.tsv"
             qa_file.write_text("archive_sha256\tlocale\tsurface\treader\tdate\tverdict\tnote\n")
-            with patch.object(GATE, "RUNTIME_QA", qa_file), patch.object(GATE, "APP_LOCALES", ("tr",)), patch.object(GATE, "QA_SURFACES", ("main",)):
+            with patch.object(GATE, "RUNTIME_QA", qa_file), patch.object(GATE, "QA_LOCALES", ("tr",)), patch.object(GATE, "QA_SURFACES", ("main",)):
                 self.assertEqual(GATE.qa_errors(archive), [("tr", "main")])
                 import hashlib
                 archive_hash = hashlib.sha256(archive.read_bytes()).hexdigest()
