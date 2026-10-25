@@ -79,8 +79,8 @@ def prepare(archive, existing_feed, download_url, output, tools):
     if not output.resolve().is_relative_to(ROOT / ".temporary_files"):
         raise ValueError("Preparation output belongs in project .temporary_files")
     validate_zip(archive)
-    # A full catalog alone is insufficient: require two text readers, localized
-    # CLI output and native QA of this exact distributable before feed staging.
+    # A full catalog alone is insufficient: require two text readers and native QA
+    # of this exact distributable before feed staging.
     result = subprocess.run([sys.executable, str(ROOT / "__Assets__/Scripts/Apple/check_localization_release.py"),
                              "--scope", "app", "--archive", str(archive)],
                             capture_output=True, text=True, timeout=120)
@@ -132,6 +132,10 @@ def prepare(archive, existing_feed, download_url, output, tools):
     ET.SubElement(item, "enclosure", {"url": download_url, "length": str(archive.stat().st_size),
         "type": "application/octet-stream", f"{{{SPARKLE}}}edSignature": ed_signature})
     channel.insert(0, item)
+    # The empty pre-release feed said no public release existed; a feed with items must not.
+    description = channel.find("description")
+    if description is not None:
+        description.text = "Signed and notarized Update Atlas releases for macOS."
     output.mkdir(parents=True, exist_ok=False)
     feed = output / "appcast.xml"
     tree.write(feed, encoding="utf-8", xml_declaration=True)

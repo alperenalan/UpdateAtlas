@@ -2,12 +2,12 @@
 IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
 --><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
   <channel>
-    <title>Update Atlas — Stable</title>
+    <item><title>Update Atlas 0.1.0 (Build 40)</title><sparkle:version>40</sparkle:version><sparkle:shortVersionString>0.1.0</sparkle:shortVersionString><sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion><pubDate>Sun, 25 Oct 2026 04:58:10 GMT</pubDate><enclosure url="https://github.com/alperenalan/UpdateAtlas/releases/download/v0.1.0/Update-Atlas-0.1.0-build-40-macOS-arm64.zip" length="5236573" type="application/octet-stream" sparkle:edSignature="hC05YdBCY7kpqiNprI2ESNlk9G4A/yVNeTMs8zT0QqwiQWoaKsQT/VDcXVa+vcGhmzcamTlCWYveFfZioQzBCQ=="></enclosure></item><title>Update Atlas — Stable</title>
     <link>https://updateatlas.alperenalan.com/</link>
-    <description>Signed and notarized Update Atlas releases for macOS. No public release is available yet.</description>
+    <description>Signed and notarized Update Atlas releases for macOS.</description>
     <language>en</language>
   </channel>
 </rss><!-- sparkle-signatures:
-edSignature: iqh8W5l3N5D0FYGxxaqfBmw8AjnVOc28XH9xd//n6f+BVLRoi2osLwNmkglkJVVmIy7lxaDQJlg5kTh6W+bpBQ==
-length: 656
+edSignature: DZql/TB5unkQTV/ws0YJfOEIQeW5EXFGrcOHAPAffs0KYhYL4yC+D2vF3fUt4FV4vZHYiHItfzG0EOySa0/WAw==
+length: 1190
 -->

@@ -1,15 +1,17 @@
 {
   "appcast": {
-    "builds": [],
-    "bytes": 799,
-    "differs_from_baseline": false,
-    "sha256": "ffbd0e935de07ed04ae0b1bbf5640ca0f07e8b38e394a15a7211c0d1d8f225ab"
+    "builds": [
+      40
+    ],
+    "bytes": 1334,
+    "differs_from_baseline": true,
+    "sha256": "d1d558b2280181cf2b76e18cc9506df6681414f73daaa179b58ac6f6b0da0368"
   },
   "catalog": {
-    "added_rules": 317,
+    "added_rules": 0,
     "bytes": 328266,
-    "changed_rules": 3,
-    "differs_from_baseline": true,
+    "changed_rules": 0,
+    "differs_from_baseline": false,
     "revision": 14,
     "rules": 364,
     "sha256": "2333af2064ab688a2cda8bb7cc9ef0c94edcb74c973dc8463ec087fff965da30"
