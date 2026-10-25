@@ -8,7 +8,7 @@ installed apps depend on:
   downloads at launch and every six hours.
 
 Cloudflare Pages (project `updateatlas-git`) builds this folder from `main`: repository root
-`Web`, output directory `site`. A push to `main` that changes anything under `Web/**` deploys to
+`Web`, output directory `site`. A push to `main` that changes anything under `Web/` (watch path `Web/*`, which Pages matches recursively) deploys to
 production automatically; preview deployments are off, and pushes outside `Web/` do not build.
 The build command validates the catalog contract, checks that the generated pages are current,
 checks site translation reviews and runs the public-tree scan; any failure stops the deployment
