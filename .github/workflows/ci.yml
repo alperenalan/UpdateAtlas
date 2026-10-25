@@ -42,14 +42,13 @@ jobs:
           -project UpdateAtlas.xcodeproj
           -scheme UpdateAtlas
           -configuration Debug
-          -derivedDataPath "$RUNNER_TEMP/UpdateAtlasDerivedData"
           CODE_SIGNING_ALLOWED=NO
           test
       - name: Verify Apple Silicon binary
-        run: >-
-          test
-          "$(lipo -archs "$RUNNER_TEMP/UpdateAtlasDerivedData/Build/Products/Debug/Update Atlas.app/Contents/MacOS/Update Atlas")"
-          = "arm64"
+        run: |
+          BUILD_DIR="$(xcodebuild -showBuildSettings -project UpdateAtlas.xcodeproj -scheme UpdateAtlas -configuration Debug 2>/dev/null | awk -F ' = ' '/^ *BUILD_DIR = / {print $2; exit}')"
+          test -n "$BUILD_DIR"
+          test "$(lipo -archs "$BUILD_DIR/Debug/Update Atlas.app/Contents/MacOS/Update Atlas")" = "arm64"
       - name: Test distribution channel validation
         working-directory: .
         run: node --test __Assets__/Scripts/tests/*.test.mjs

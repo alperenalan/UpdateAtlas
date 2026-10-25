@@ -22,7 +22,7 @@ Requirements: macOS 14+, Xcode 26 or later, and XcodeGen.
 cd Apple
 xcodegen generate
 xcodebuild -project UpdateAtlas.xcodeproj -scheme UpdateAtlas \
-  -configuration Debug -derivedDataPath ../.temporary_files/DerivedData \
+  -configuration Debug \
   CODE_SIGNING_ALLOWED=NO test
 ```
 

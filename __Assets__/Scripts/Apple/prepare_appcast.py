@@ -34,6 +34,17 @@ def run(*args):
     return result.stdout.strip()
 
 
+def sparkle_tools_from_xcode():
+    settings = run("/usr/bin/xcodebuild", "-showBuildSettings", "-project",
+                   str(ROOT / "Apple/UpdateAtlas.xcodeproj"), "-scheme", "UpdateAtlas")
+    build_dir = next((line.split(" = ", 1)[1] for line in settings.splitlines()
+                      if line.strip().startswith("BUILD_DIR = ")), None)
+    if not build_dir:
+        raise ValueError("Could not locate Xcode DerivedData")
+    derived_data = Path(build_dir).parents[1]
+    return derived_data / "SourcePackages/artifacts/sparkle/Sparkle/bin"
+
+
 def validate_zip(archive):
     with zipfile.ZipFile(archive) as bundle:
         entries = bundle.infolist()
@@ -151,9 +162,10 @@ if __name__ == "__main__":
     parser.add_argument("--existing-feed", type=Path, required=True)
     parser.add_argument("--download-url", required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--tools", type=Path, default=ROOT / ".temporary_files/DerivedData/SourcePackages/artifacts/sparkle/Sparkle/bin")
+    parser.add_argument("--tools", type=Path, help="Sparkle tools directory; defaults to Xcode's resolved DerivedData")
     args = parser.parse_args()
     try:
-        prepare(args.archive, args.existing_feed, args.download_url, args.output, args.tools)
+        prepare(args.archive, args.existing_feed, args.download_url, args.output,
+                args.tools or sparkle_tools_from_xcode())
     except (ValueError, OSError, subprocess.SubprocessError, ET.ParseError, zipfile.BadZipFile) as error:
         parser.exit(1, f"Release preparation refused: {error}\n")
