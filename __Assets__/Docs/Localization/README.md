@@ -55,14 +55,14 @@ Before preparing an appcast, run:
 python3 __Assets__/Scripts/Apple/check_localization_release.py --scope app --archive PATH_TO_SIGNED_ZIP
 ```
 
-`prepare_appcast.py` runs that same gate. Before a separately approved site production
-deployment, run `python3 Web/generate_site.py --check` and
+`prepare_appcast.py` runs that same gate. Before pushing site changes, run
+`python3 Web/generate_site.py --check` and
 `python3 __Assets__/Scripts/Apple/check_localization_release.py --scope site`.
 The Git-connected `updateatlas-git` Pages project runs both checks and the
-tracked-source scan as its build command. Its `Web/*` watch filter must be verified
-against a non-Web push whenever automatic production deployments are enabled;
-Cloudflare previously queued non-Web pushes while deployments were disabled.
-A preview is not acceptance for production.
+tracked-source scan as its build command, and deploys `main` to production automatically
+when a push touches `Web/` (watch path `Web/*`; Pages matches `*` recursively). Pushes outside
+`Web/` appear in the dashboard as skipped deployments, which is the filter working, not a stuck
+queue. Preview deployments are off.
 
 **Current state (2026-10-24):** current source has 776 referenced String Catalog keys with six
 filled translations and 63 site copy rows in seven languages. All 441 site cells have
