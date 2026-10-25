@@ -1,8 +1,22 @@
 # Changelog
 
-All notable changes to Update Atlas will be documented here. The project follows semantic versioning once its first public release is published.
+All notable changes to Update Atlas are documented here. The project follows semantic versioning.
 
 ## Unreleased
+
+## 0.1.0 — 2026-10-25
+
+First public release: signed and notarized for Apple silicon Macs running macOS 14 or later,
+with source published under GPL-3.0-only. Highlights since the private test builds:
+
+- Version checks never call software up to date when its installed version cannot be read; "2.0" equals "2.0.0", prereleases sort below their release, and an npm `latest` tag older than an installed prerelease is not offered as an update.
+- Scans read only the start of each app executable; the CLI ignores relative `PATH` entries.
+- Clearer plurals and word order in seven languages, collapsible technical details in the inspector, a native accent-colour picker, a Help menu and keyboard shortcuts.
+- Software catalog revision 14 (364 rules) is bundled and served from the product site; a site that lags behind the bundled catalog no longer produces a warning.
+- Sparkle asks once whether to check for Update Atlas updates automatically.
+- MCP integration was removed from the release; the read-only CLI and Agent Skill remain.
+
+### Earlier private builds
 
 ### Added
 

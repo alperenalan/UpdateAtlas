@@ -1,8 +1,7 @@
 # Third-party notices
 
 Alperen Alan's original Update Atlas work is licensed under GPL-3.0-only; see
-[LICENSE](LICENSE). This does not relicense third-party components. The repository
-remains private while public-release checks are completed.
+[LICENSE](LICENSE). This does not relicense third-party components.
 
 The macOS app embeds [Sparkle 2.10.0](https://github.com/sparkle-project/Sparkle/tree/2.10.0),
 licensed under MIT, with additional component notices included in

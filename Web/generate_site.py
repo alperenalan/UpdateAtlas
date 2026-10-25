@@ -52,6 +52,7 @@ BREW = ""  # for example "brew install --cask alperenalan/tap/update-atlas", onc
 CREATOR = "https://alperenalan.com/"
 COFFEE = "https://buymeacoffee.com/alperenalan"
 SPONSORS_URL = "https://github.com/sponsors/alperenalan"
+CONTACT = "hi@alperenalan.com"
 SHOTS = SITE / "assets" / "shots"
 
 ICONS = {
@@ -187,11 +188,16 @@ def render(lang: str, t: dict[str, str], css_hash: str, base_hash: str, tokens_h
     </div></section>
   </main>
 """
+    # Cloudflare would otherwise rewrite the address and inject its decoding script, which
+    # contradicts "no third-party scripts" and hides the address without JavaScript.
+    contact = x("p_contact_body").replace(CONTACT, f'<a class="text-link" href="mailto:{CONTACT}">{CONTACT}</a>')
     privacy_main = f"""  <main id="main" class="legal"><div class="container legal-inner">
     <h1>{x('privacy_title')}</h1>
     <p class="legal-updated">{x('privacy_updated')}</p>
     <p class="lead">{x('privacy_intro')}</p>
-    {"".join(f"<h2>{x(f'p_{k}_title')}</h2><p>{x(f'p_{k}_body')}</p>" for k in ("local", "network", "catalog", "never", "site", "contact"))}
+    {"".join(f"<h2>{x(f'p_{k}_title')}</h2><p>{x(f'p_{k}_body')}</p>" for k in ("local", "network", "catalog", "never", "site"))}
+    <h2>{x('p_contact_title')}</h2>
+    <!--email_off--><p>{contact}</p><!--/email_off-->
     <p><a class="text-link" href="/{lang}/">{x('back_home')}</a></p>
   </div></main>
 """
