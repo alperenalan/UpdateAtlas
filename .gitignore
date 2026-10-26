@@ -66,3 +66,6 @@ __Assets__/Docs/Backlog.md
 __Assets__/Docs/design-qa*.md
 __Assets__/Docs/Publishing.md
 __Assets__/Docs/Self-Maintenance.md
+
+# ---- the internal notes' own git directory (pushed to the private UpdateAtlas-archive repo)
+/.internal-notes.git/
