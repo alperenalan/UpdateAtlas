@@ -20,6 +20,9 @@
   <img src="https://img.shields.io/badge/macOS-14%2B-blue" alt="macOS 14 or later">
   <img src="https://img.shields.io/badge/Apple%20silicon-arm64-blue" alt="Apple silicon">
   <img src="https://img.shields.io/badge/license-GPL--3.0--only-green" alt="GPL-3.0-only">
+</p>
+
+<p align="center">
   <a href="https://github.com/alperenalan/UpdateAtlas/releases/latest"><img src="https://img.shields.io/github/downloads/alperenalan/UpdateAtlas/Update-Atlas.dmg?label=DMG%20downloads" alt="GitHub Release DMG downloads"></a>
   <a href="https://github.com/alperenalan/UpdateAtlas/stargazers"><img src="https://img.shields.io/github/stars/alperenalan/UpdateAtlas?style=flat&amp;label=Stars" alt="GitHub stars"></a>
 </p>
