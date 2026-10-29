@@ -24,7 +24,7 @@ final class CatalogTests: XCTestCase {
         XCTAssertNotNil(catalog.entries.first(where: { $0.id == "comfyui-managed-stable" }))
         XCTAssertNotNil(catalog.entries.first(where: { $0.id == "chatgpt-macos-stable" }))
         XCTAssertNotNil(catalog.entries.first(where: { $0.id == "visual-studio-code-stable-macos" }))
-        XCTAssertEqual(catalog.revision, 14)
+        XCTAssertEqual(catalog.revision, 15)
         XCTAssertGreaterThanOrEqual(catalog.entries.count, 200)
         let vendorSources: [(String, String, CatalogVersionProviderKind)] = [
             ("canon-ij-scan-utility2-macos", "jp.co.canon.ij.scanutility2", .canonSupportRelease),
@@ -43,6 +43,8 @@ final class CatalogTests: XCTestCase {
             ("slack-macos-stable", "com.tinyspeck.slackmacgap", .homebrewCask),
             ("microsoft-teams-macos-stable", "com.microsoft.teams2", .homebrewCask),
             ("antigravity-macos-stable", "com.google.antigravity", .homebrewCask),
+            ("antigravity-ide-macos-stable", "com.google.antigravity-ide", .homebrewCask),
+            ("google-gemini-macos-stable", "com.google.GeminiMacOS", .homebrewCask),
             ("cursor-macos-stable", "com.todesktop.230313mzl4w4u92", .homebrewCask),
             ("spotify-macos-stable", "com.spotify.client", .homebrewCask),
             ("tor-browser-macos-stable", "org.torproject.torbrowser", .homebrewCask)
@@ -136,6 +138,28 @@ final class CatalogTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(updaters.entries.filter { $0.publisher == "Google" }.count, 3)
         XCTAssertEqual(updaters.entries.filter { $0.publisher == "Affinity" }.count, 4)
         XCTAssertEqual(Set(groups.flatMap(\.entries).map(\.id)), Set(catalog.entries.map(\.id)))
+    }
+
+    func testGoogleDesktopProductsKeepSeparateCatalogIdentities() throws {
+        let url = try XCTUnwrap(Bundle.main.url(forResource: "BootstrapCatalog", withExtension: "json"))
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let catalog = try decoder.decode(RemoteCatalog.self, from: Data(contentsOf: url))
+        let identities = [
+            ("Gemini", "com.google.GeminiMacOS", "google-gemini-macos-stable"),
+            ("Antigravity", "com.google.antigravity", "antigravity-macos-stable"),
+            ("Antigravity IDE", "com.google.antigravity-ide", "antigravity-ide-macos-stable")
+        ]
+        for (name, bundleID, ruleID) in identities {
+            let candidate = ApplicationCandidate(
+                path: "/Applications/\(name).app", name: name, bundleIdentifier: bundleID,
+                displayVersion: "2.6.0", buildVersion: "2.6.0", teamIdentifier: "EQHXZ8M8AV",
+                parentManagerBundleIdentifier: nil, isSystemApplication: false, info: [:]
+            )
+            let detected = UpdateDetectionEngine().classify([candidate], catalog: catalog).first
+            XCTAssertEqual(detected?.catalogEntryID, ruleID, name)
+            XCTAssertEqual(detected?.mechanism, .externalManager, name)
+        }
     }
 
     func testLegacyEntryWithoutPublisherStillDecodes() throws {

@@ -107,7 +107,7 @@ struct DirectInstallScanner: Sendable {
               owner: "Cua Driver", documentationURL: "https://cua.ai/docs/how-to-guides/driver/install",
               appBundleID: "com.trycua.driver"),
         .init(id: "antigravity-cli", name: "Antigravity CLI", relativePath: ".local/bin/agy",
-              owner: "Antigravity CLI", documentationURL: "https://antigravity.google/docs/cli/install/"),
+              owner: "Antigravity CLI", documentationURL: "https://antigravity.google/docs/getting-started"),
         .init(id: "claude-code", name: "Claude Code", relativePath: ".local/bin/claude",
               owner: "Claude Code", documentationURL: "https://code.claude.com/docs/en/setup",
               versionDirectory: ".local/share/claude/versions"),

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "catalogID": "update-atlas-bootstrap",
-  "revision": 14,
-  "generatedAt": "2026-10-24T00:00:00Z",
+  "revision": 15,
+  "generatedAt": "2026-10-29T22:00:00Z",
   "expiresAt": null,
   "entries": [
     {
@@ -1107,6 +1107,9 @@
       "match": {
         "bundleIdentifiers": [
           "com.google.antigravity"
+        ],
+        "teamIdentifiers": [
+          "EQHXZ8M8AV"
         ]
       },
       "mechanism": {
@@ -1124,6 +1127,56 @@
       "support": "supported",
       "vendorURL": "https://antigravity.google/",
       "notes": "The application's own updater retains installation ownership. The Homebrew Cask catalog supplies the public stable version for comparison; this is not evidence that Homebrew installed the app."
+    },
+    {
+      "id": "antigravity-ide-macos-stable",
+      "displayName": "Antigravity IDE",
+      "publisher": "Google",
+      "match": {
+        "bundleIdentifiers": ["com.google.antigravity-ide"],
+        "teamIdentifiers": ["EQHXZ8M8AV"],
+        "pathSuffixes": ["/Antigravity IDE.app"]
+      },
+      "mechanism": {
+        "type": "externalManager",
+        "name": "Antigravity IDE Updater · Homebrew version source",
+        "feedURL": null,
+        "managerBundleIdentifier": null,
+        "provider": {
+          "type": "homebrewCask",
+          "url": "https://formulae.brew.sh/api/cask/antigravity-ide.json",
+          "channel": "stable",
+          "releaseChannel": "stable"
+        }
+      },
+      "support": "supported",
+      "vendorURL": "https://antigravity.google/product/antigravity-ide",
+      "notes": "Antigravity IDE is a separate application from Antigravity and the standalone agy CLI. Its own updater owns installation; Homebrew Cask only supplies a version comparison."
+    },
+    {
+      "id": "google-gemini-macos-stable",
+      "displayName": "Gemini",
+      "publisher": "Google",
+      "match": {
+        "bundleIdentifiers": ["com.google.GeminiMacOS"],
+        "teamIdentifiers": ["EQHXZ8M8AV"],
+        "pathSuffixes": ["/Gemini.app"]
+      },
+      "mechanism": {
+        "type": "externalManager",
+        "name": "Gemini in-app updater · Homebrew version source",
+        "feedURL": null,
+        "managerBundleIdentifier": null,
+        "provider": {
+          "type": "homebrewCask",
+          "url": "https://formulae.brew.sh/api/cask/google-gemini.json",
+          "channel": "stable",
+          "releaseChannel": "stable"
+        }
+      },
+      "support": "supported",
+      "vendorURL": "https://support.google.com/gemini/answer/17011627",
+      "notes": "The Gemini Mac app is independent of the npm gemini-cli package. Its in-app update command owns installation; Homebrew Cask supplies only the public version."
     },
     {
       "id": "cursor-macos-stable",

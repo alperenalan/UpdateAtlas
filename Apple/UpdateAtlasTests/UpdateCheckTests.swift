@@ -372,6 +372,36 @@ final class UpdateCheckTests: XCTestCase {
         XCTAssertEqual(newerResults.first?.updateCheck.latestVersion, "2026.3.1")
     }
 
+    func testGoogleAppsDoNotClaimCurrentWhenHomebrewCaskLags() async throws {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [ProviderFallbackURLProtocol.self]
+        let session = URLSession(configuration: configuration)
+        defer { session.invalidateAndCancel(); ProviderFallbackURLProtocol.responses = [:] }
+
+        for (bundleID, cask, installed, tracked) in [
+            ("com.google.GeminiMacOS", "google-gemini", "1.135.1.1291", "1.135.1.1290"),
+            ("com.google.antigravity", "antigravity", "2.28.2", "2.28.1"),
+            ("com.google.antigravity-ide", "antigravity-ide", "2.6.1", "2.6.0")
+        ] {
+            let url = try XCTUnwrap(URL(string: "https://formulae.brew.sh/api/cask/\(cask).json"))
+            ProviderFallbackURLProtocol.responses = [
+                url.absoluteString: (200, Data(#"{"version":"\#(tracked)"}"#.utf8))
+            ]
+            let application = InstalledApplication(
+                inventoryID: bundleID, path: "/Applications/Fixture.app", name: cask,
+                bundleIdentifier: bundleID, displayVersion: installed, buildVersion: "",
+                teamIdentifier: "EQHXZ8M8AV", status: .supported, mechanism: .externalManager,
+                mechanismName: "In-app updater", confidence: .verified, evidence: [],
+                parentManagerBundleIdentifier: nil, parentManagerName: nil, vendorURL: nil,
+                versionProvider: CatalogVersionProvider(type: .homebrewCask, url: url, channel: "stable"),
+                catalogEntryID: cask, notes: "", kind: .application, packageProvenance: nil
+            )
+            let results = await UpdateCheckService(session: session).check([application])
+            let result = try XCTUnwrap(results.first)
+            XCTAssertEqual(result.updateCheck.availability, .sourcePending, bundleID)
+        }
+    }
+
     func testDellCaskDoesNotTreatDifferentPackageRevisionAsSoftwareUpdate() async throws {
         let url = try XCTUnwrap(URL(string: "https://formulae.brew.sh/api/cask/ddpm.json"))
         let configuration = URLSessionConfiguration.ephemeral

@@ -73,6 +73,21 @@ final class PackageInventoryTests: XCTestCase {
         XCTAssertEqual(candidates.first?.packageProvenance?.manager, .npm)
     }
 
+    func testGeminiCLIIsItsOwnNPMPackageWithManagerVersionEvidence() {
+        let installed = Data(#"{"dependencies":{"@google/gemini-cli":{"version":"0.65.0"}}}"#.utf8)
+        let outdated = Data(#"{"@google/gemini-cli":{"current":"0.65.0","wanted":"0.65.0","latest":"0.66.0"}}"#.utf8)
+        let candidates = PackageInventoryScanner.parseNPM(
+            data: installed, executablePath: "/opt/homebrew/bin/npm",
+            globalRoot: "/opt/homebrew/lib/node_modules", outdatedData: outdated
+        )
+        XCTAssertEqual(candidates.count, 1)
+        XCTAssertEqual(candidates.first?.name, "@google/gemini-cli")
+        XCTAssertEqual(candidates.first?.kind, .commandLineTool)
+        XCTAssertEqual(candidates.first?.packageProvenance?.identifier, "@google/gemini-cli")
+        XCTAssertEqual(candidates.first?.packageProvenance?.latestVersion, "0.66.0")
+        XCTAssertEqual(candidates.first?.packageProvenance?.manager, .npm)
+    }
+
     func testNPMOutdatedMetadataIncludesLatestVersion() {
         let installed = #"{"dependencies":{"sample":{"version":"2.0.9"}}}"#
         let outdated = #"{"sample":{"current":"2.0.9","wanted":"2.1.0","latest":"2.1.0"}}"#

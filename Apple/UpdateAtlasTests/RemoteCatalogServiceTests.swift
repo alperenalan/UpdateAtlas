@@ -161,7 +161,7 @@ struct RemoteCatalogServiceTests {
         let official = try #require(URL(string: CatalogSettings.officialRemoteURL))
         defer { CatalogStubStore.shared.remove(official) }
         fixture.defaults.set(fixture.endpoint.absoluteString, forKey: "catalog.remote-url")
-        CatalogStubStore.shared.set(.init(status: 200, data: try catalogData(revision: 15,
+        CatalogStubStore.shared.set(.init(status: 200, data: try catalogData(revision: 16,
             catalogID: "update-atlas-bootstrap", entries: bundledEntries()), headers: [:]), for: official)
         let service = RemoteCatalogService(session: fixture.session,
                                            cacheDirectory: fixture.cacheDirectory)
@@ -184,7 +184,7 @@ struct RemoteCatalogServiceTests {
 
         let result = await fixture.service.snapshot(for: .scan)
         #expect(result.source == .bundled)
-        #expect(result.catalog.revision == 14)
+        #expect(result.catalog.revision == 15)
     }
 
     @Test("A lower revision cannot replace the matching cached catalog")
@@ -214,15 +214,15 @@ struct RemoteCatalogServiceTests {
 
         let rejected = await fixture.service.snapshot(for: .scan)
         #expect(rejected.source == .bundled)
-        #expect(rejected.catalog.revision == 14)
+        #expect(rejected.catalog.revision == 15)
         // A website that lags behind the app's bundled rules is expected and shows no warning.
         #expect(rejected.warning == nil)
 
-        fixture.respond(status: 200, data: try catalogData(revision: 15, catalogID: "update-atlas-bootstrap",
+        fixture.respond(status: 200, data: try catalogData(revision: 16, catalogID: "update-atlas-bootstrap",
             entries: bundledEntries()))
         let current = await fixture.service.snapshot(for: .scan)
         #expect(current.source == .remote(fixture.endpoint))
-        #expect(current.catalog.revision == 15)
+        #expect(current.catalog.revision == 16)
     }
 
     @Test("A cached official catalog from an older app cannot displace newer bundled rules")
@@ -237,9 +237,9 @@ struct RemoteCatalogServiceTests {
 
         let offline = await fixture.service.snapshot(for: .localOnly)
         #expect(offline.source == .bundled)
-        #expect(offline.catalog.revision == 14)
+        #expect(offline.catalog.revision == 15)
 
-        fixture.respond(status: 200, data: try catalogData(revision: 15, catalogID: "update-atlas-bootstrap",
+        fixture.respond(status: 200, data: try catalogData(revision: 16, catalogID: "update-atlas-bootstrap",
             entries: bundledEntries()))
         let refreshed = await fixture.service.snapshot(for: .scan)
         #expect(refreshed.source == .remote(fixture.endpoint))

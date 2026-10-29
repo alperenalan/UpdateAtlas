@@ -674,6 +674,14 @@ struct UpdateCheckService: Sendable {
             if application.bundleIdentifier == "Qisda.DDPM" {
                 return dellDDPMCaskResult(application, latestVersion: latest)
             }
+            if ["com.google.GeminiMacOS", "com.google.antigravity", "com.google.antigravity-ide"]
+                .contains(application.bundleIdentifier),
+               VersionComparator.isNewer(application.displayVersion, than: latest) {
+                return .sourcePending(
+                    installedVersion: application.displayVersion,
+                    detail: String(localized: "Homebrew Cask is tracking an older Google release and cannot confirm this installation is current.", bundle: AppL10n.bundle, locale: AppL10n.locale)
+                )
+            }
             return versionResult(
                 application,
                 latestVersion: latest,
