@@ -372,7 +372,7 @@ final class UpdateCheckTests: XCTestCase {
         XCTAssertEqual(newerResults.first?.updateCheck.latestVersion, "2026.3.1")
     }
 
-    func testGoogleAppsDoNotClaimCurrentWhenHomebrewCaskLags() async throws {
+    func testReviewedAppsDoNotClaimCurrentWhenHomebrewCaskLags() async throws {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [ProviderFallbackURLProtocol.self]
         let session = URLSession(configuration: configuration)
@@ -381,7 +381,9 @@ final class UpdateCheckTests: XCTestCase {
         for (bundleID, cask, installed, tracked) in [
             ("com.google.GeminiMacOS", "google-gemini", "1.135.1.1291", "1.135.1.1290"),
             ("com.google.antigravity", "antigravity", "2.28.2", "2.28.1"),
-            ("com.google.antigravity-ide", "antigravity-ide", "2.6.1", "2.6.0")
+            ("com.google.antigravity-ide", "antigravity-ide", "2.6.1", "2.6.0"),
+            ("com.canva.affinity", "affinity", "3.3.1", "3.3.0"),
+            ("com.canva.CanvaDesktop", "canva", "1.126.2", "1.126.1")
         ] {
             let url = try XCTUnwrap(URL(string: "https://formulae.brew.sh/api/cask/\(cask).json"))
             ProviderFallbackURLProtocol.responses = [
@@ -810,6 +812,30 @@ final class UpdateCheckTests: XCTestCase {
         let incompatibleScan = await checker.check([application])
         let incompatible = try XCTUnwrap(incompatibleScan.first?.updateCheck)
         XCTAssertEqual(incompatible.availability, .checkFailed)
+    }
+
+    func testAffinityOfficialAppcastComparesBuildAndTreatsLagAsPending() async throws {
+        let url = try XCTUnwrap(URL(string: "https://things.seriflabs.com/affinity-update-mac-retail-studiopro"))
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [ProviderFallbackURLProtocol.self]
+        let session = URLSession(configuration: configuration)
+        defer { session.invalidateAndCancel(); ProviderFallbackURLProtocol.responses = [:] }
+        let application = InstalledApplication(
+            inventoryID: "affinity-test", path: "/Applications/Affinity.app", name: "Affinity",
+            bundleIdentifier: "com.canva.affinity", displayVersion: "3.3.1", buildVersion: "4940",
+            teamIdentifier: "5HD2ARTBFS", status: .supported, mechanism: .sparkle,
+            mechanismName: "Affinity Updater", confidence: .verified, evidence: [],
+            parentManagerBundleIdentifier: nil, parentManagerName: nil, vendorURL: nil,
+            versionProvider: CatalogVersionProvider(type: .sparkleAppcast, url: url, channel: "stable"),
+            catalogEntryID: "affinity-v3-macos", notes: "", kind: .application, packageProvenance: nil
+        )
+        for (build, expected) in [("4939", UpdateAvailability.sourcePending),
+                                  ("4940", .upToDate), ("4941", .updateAvailable)] {
+            let feed = "<rss xmlns:sparkle=\"http://www.andymatuschak.org/xml-namespaces/sparkle\"><channel><item><enclosure sparkle:version=\"\(build)\" sparkle:shortVersionString=\"3.3.1\" /></item></channel></rss>"
+            ProviderFallbackURLProtocol.responses = [url.absoluteString: (200, Data(feed.utf8))]
+            let checked = await UpdateCheckService(session: session).check([application])
+            XCTAssertEqual(checked.first?.updateCheck.availability, expected, build)
+        }
     }
 
     func testPackageProviderSuppressesFalsePositiveWhenVersionsMatch() async {
