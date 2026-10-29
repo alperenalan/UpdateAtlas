@@ -1,0 +1,15 @@
+# Android Studio component proof of concept
+
+Observed on 2026-10-30 with Android Studio 2026.2.2, build `AI-262.10968.63.2622.16730706`. The separate read-only probe is at `Apple/Proofs/AndroidStudio/probe.py`.
+
+| Area | Observation | Update source and action |
+| --- | --- | --- |
+| User plugins | Three plugins in the settings directory for the current IDE release. `plugin.xml` in their JARs provided stable IDs and installed versions. The compatible Marketplace query returned the same version for all three. | JetBrains Marketplace `GET /api/search/updates?build=AI-<build>&pluginXMLId=<id>` returned a compatible version. Android Studio's Plugins UI owns installation; no safe per-plugin update command was verified. |
+| Bundled plugins | 77 plugin directories in the Android Studio app bundle; all had readable `plugin.xml` metadata. | Treat as part of the IDE. Updating the IDE normally replaces them. Do not count a newer generic Marketplace release as an update for this IDE build. |
+| SDK components | Six local packages in the SDK path recorded by Android Studio's `android.sdk.path.xml`. No NDK package was installed in that root. | `android sdk list --sdk=<root>` reported one available update: Android Emulator `37.2.12 → 37.2.13`. The other five had no update reported in the selected channel. |
+
+Google documents `android sdk update <package>` for one package, and the installed Android CLI contains that command. It can be offered later as an explicit, individually confirmed Update Atlas action, with the SDK root, channel, licenses, command output and a fresh post-action version read shown to the user. The PoC did not run it. Google also documents the SDK Manager UI for selecting packages. JetBrains documents updating plugins in the IDE's Plugins settings; its CLI documentation describes `installPlugins`, not a verified per-plugin update operation for an installed Android Studio plugin.
+
+The Marketplace endpoint was checked against the installed IDE build and the three installed plugin IDs. It is an API used by JetBrains' official Marketplace client, but no stable public contract for this particular lookup was found. Product integration should fail closed if the response changes, does not match the requested ID, or cannot be compared. Bundled plugins, disabled plugins, custom repositories, additional SDK roots and non-stable release channels need separate policy before claiming comprehensive update status.
+
+Sources: [Android CLI SDK list](https://developer.android.com/tools/agents/android-cli/commands/sdk_list), [Android CLI SDK update](https://developer.android.com/tools/agents/android-cli/commands/sdk_update), [Android Studio SDK Manager](https://developer.android.com/studio/intro/update), [JetBrains plugin management](https://www.jetbrains.com/help/idea/managing-plugins.html), [JetBrains Marketplace client endpoint](https://github.com/JetBrains/plugin-repository-rest-client/blob/master/rest/src/main/kotlin/org/jetbrains/intellij/pluginRepository/internal/api/PluginRepositoryService.kt), [JetBrains plugin installation CLI](https://www.jetbrains.com/help/idea/install-plugins-from-the-command-line.html).
