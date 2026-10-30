@@ -37,12 +37,13 @@ struct InventoryTableCell: View {
                     } label: {
                         Image(systemName: expanded ? "chevron.down" : "chevron.right")
                             .font(.caption)
-                            .frame(width: 12)
+                            .frame(width: 32, height: 36)
+                            .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel(String(localized: "Managed items:", bundle: AppL10n.bundle, locale: AppL10n.locale) + " " + app.name)
                     .accessibilityValue(expanded ? String(localized: "Expanded", bundle: AppL10n.bundle, locale: AppL10n.locale) : String(localized: "Collapsed", bundle: AppL10n.bundle, locale: AppL10n.locale))
-                } else { Color.clear.frame(width: 12) }
+                } else { Color.clear.frame(width: 32, height: 36) }
                 ApplicationIcon(application: app, size: isSpacious ? 30 : 26).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 1) {
                     HStack(spacing: 5) {
