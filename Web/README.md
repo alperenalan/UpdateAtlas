@@ -30,7 +30,9 @@ python3 -m http.server 8765 --directory Web/site
 `PUBLIC_REPO`, `RELEASED`, `SPONSORS` and `BREW` at the top of `generate_site.py` turn on the
 GitHub, download, GitHub Sponsors and Homebrew elements once each destination exists. Asset links
 carry a content hash so a fresh page never mixes with a cached stylesheet. The site has no
-analytics, cookies or third-party scripts; the language and theme choices stay in local storage.
+cookies or analytics code of its own. Cloudflare Web Analytics is injected at the edge across the
+zone, so `_headers` allows `static.cloudflareinsights.com` in `script-src` and `connect-src 'self'`
+for its report, and the privacy page says so; the language and theme choices stay in local storage.
 
 App screenshots live in `site/assets/shots/` as `main-light.png`/`main-dark.png` and
 `menubar-light.png`/`menubar-dark.png`; a pair is shown only when both files exist.

@@ -12869,3 +12869,17 @@ app:Dell's installed software matches the tracked release family.	tr	9ca714faefa
 app:Google's Android Studio stable release page did not contain a comparable version.	tr	e0ca4dd69c095649	4ef3a79ee0751ab3	google:gemini-4-argon-high	2026-10-25	ok	
 app:Google's Android Studio stable release page reports a newer release.	tr	33aa3e6def302042	8800bf45c222d86a	google:gemini-4-argon-high	2026-10-25	ok	
 app:Homebrew's extra Android Studio package revision is not comparable with the installed IDE release version.	tr	de5eb25a407223c7	5db61a72ecf1c099	google:gemini-4-argon-high	2026-10-25	ok	
+site:p_site_body	en	262bd6b674545a88	262bd6b674545a88	google:gemini-4-argon-high	2026-10-31	ok	
+site:p_site_body	en	262bd6b674545a88	262bd6b674545a88	openai:codex	2026-10-31	ok	
+site:p_site_body	tr	5151fc22e7eddaca	262bd6b674545a88	google:gemini-4-argon-high	2026-10-31	ok	
+site:p_site_body	tr	5151fc22e7eddaca	262bd6b674545a88	openai:codex	2026-10-31	ok	
+site:p_site_body	ru	938b3ea1970b21bb	262bd6b674545a88	google:gemini-4-argon-high	2026-10-31	ok	
+site:p_site_body	ru	938b3ea1970b21bb	262bd6b674545a88	openai:codex	2026-10-31	ok	
+site:p_site_body	de	d33ac22f606c1d24	262bd6b674545a88	google:gemini-4-argon-high	2026-10-31	ok	
+site:p_site_body	de	d33ac22f606c1d24	262bd6b674545a88	openai:codex	2026-10-31	ok	
+site:p_site_body	fr	604316929251035e	262bd6b674545a88	google:gemini-4-argon-high	2026-10-31	ok	
+site:p_site_body	fr	604316929251035e	262bd6b674545a88	openai:codex	2026-10-31	ok	
+site:p_site_body	zh-Hans	c12e6b55030e3a47	262bd6b674545a88	google:gemini-4-argon-high	2026-10-31	ok	
+site:p_site_body	zh-Hans	c12e6b55030e3a47	262bd6b674545a88	openai:codex	2026-10-31	ok	
+site:p_site_body	ja	6fb798f62822ee7b	262bd6b674545a88	google:gemini-4-argon-high	2026-10-31	ok	
+site:p_site_body	ja	6fb798f62822ee7b	262bd6b674545a88	openai:codex	2026-10-31	ok	
