@@ -679,7 +679,7 @@ struct UpdateCheckService: Sendable {
                VersionComparator.isNewer(application.displayVersion, than: latest) {
                 return .sourcePending(
                     installedVersion: application.displayVersion,
-                    detail: String(localized: "Homebrew Cask is tracking an older Google release and cannot confirm this installation is current.", bundle: AppL10n.bundle, locale: AppL10n.locale)
+                    detail: String(localized: "The installed version is newer than the latest release the package manager offers; no update is shown.", bundle: AppL10n.bundle, locale: AppL10n.locale)
                 )
             }
             return versionResult(
