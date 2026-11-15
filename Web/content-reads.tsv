@@ -1,0 +1,8 @@
+item	field	hash	reader	date	verdict	note
+atlas-privacy-en	p_site_body	262bd6b674545a88	openai:codex	2026-11-15	ok	[C12,C22] Provider claim attributed; website analytics and host logs separate from app privacy; translation matches source. Live runtime still requires deployment QA.
+atlas-privacy-tr	p_site_body	5151fc22e7eddaca	openai:codex	2026-11-15	ok	[C12,C22] Provider claim attributed; website analytics and host logs separate from app privacy; translation matches source. Live runtime still requires deployment QA.
+atlas-privacy-ru	p_site_body	938b3ea1970b21bb	openai:codex	2026-11-15	ok	[C12,C22] Provider claim attributed; website analytics and host logs separate from app privacy; translation matches source. Live runtime still requires deployment QA.
+atlas-privacy-de	p_site_body	d33ac22f606c1d24	openai:codex	2026-11-15	ok	[C12,C22] Provider claim attributed; website analytics and host logs separate from app privacy; translation matches source. Live runtime still requires deployment QA.
+atlas-privacy-fr	p_site_body	604316929251035e	openai:codex	2026-11-15	ok	[C12,C22] Provider claim attributed; website analytics and host logs separate from app privacy; translation matches source. Live runtime still requires deployment QA.
+atlas-privacy-zh-Hans	p_site_body	c12e6b55030e3a47	openai:codex	2026-11-15	ok	[C12,C22] Provider claim attributed; website analytics and host logs separate from app privacy; translation matches source. Live runtime still requires deployment QA.
+atlas-privacy-ja	p_site_body	6fb798f62822ee7b	openai:codex	2026-11-15	ok	[C12,C22] Provider claim attributed; website analytics and host logs separate from app privacy; translation matches source. Live runtime still requires deployment QA.
