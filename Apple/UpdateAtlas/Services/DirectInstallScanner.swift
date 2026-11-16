@@ -61,6 +61,20 @@ struct DirectInstallScanner: Sendable {
                 guard seenResolvedPaths.insert(resolved.path).inserted else { continue }
 
                 let version = recipe.version(from: resolved, homeDirectory: homeDirectory)
+                let ollamaParent = recipe.id == "ollama-cli"
+                    ? applicationCandidates.first(where: { app in
+                        app.bundleIdentifier == "com.electron.ollama"
+                            && resolved.path == URL(fileURLWithPath: app.path).resolvingSymlinksInPath()
+                                .appendingPathComponent("Contents/Resources/ollama").path
+                    }) : nil
+                var info = [
+                    "DirectInstallSource": recipe.documentationURL,
+                    "DirectInstallOwner": recipe.owner,
+                    "DirectInstallMethod": recipe.installMethod
+                ]
+                if recipe.id == "ollama-cli", version != nil {
+                    info["DirectInstallVersionProven"] = "true"
+                }
                 candidates.append(ApplicationCandidate(
                     inventoryID: "direct-cli:\(recipe.id):\(executable.path)",
                     path: executable.path,
@@ -69,13 +83,10 @@ struct DirectInstallScanner: Sendable {
                     displayVersion: version ?? String(localized: "Unknown", bundle: AppL10n.bundle, locale: AppL10n.locale),
                     buildVersion: "",
                     teamIdentifier: nil,
-                    parentManagerBundleIdentifier: nil,
+                    parentInventoryID: ollamaParent?.inventoryID,
+                    parentManagerBundleIdentifier: ollamaParent == nil ? nil : "com.electron.ollama",
                     isSystemApplication: false,
-                    info: [
-                        "DirectInstallSource": recipe.documentationURL,
-                        "DirectInstallOwner": recipe.owner,
-                        "DirectInstallMethod": recipe.installMethod
-                    ],
+                    info: info,
                     kind: .commandLineTool
                 ))
             }
@@ -111,6 +122,9 @@ struct DirectInstallScanner: Sendable {
         .init(id: "claude-code", name: "Claude Code", relativePath: ".local/bin/claude",
               owner: "Claude Code", documentationURL: "https://code.claude.com/docs/en/setup",
               versionDirectory: ".local/share/claude/versions"),
+        .init(id: "ollama-cli", name: "Ollama CLI", relativePath: ".local/bin/ollama",
+              owner: "Ollama", documentationURL: "https://docs.ollama.com/macos",
+              systemBinaryName: "ollama"),
         .init(id: "uv", name: "uv", relativePath: ".local/bin/uv",
               owner: "uv", documentationURL: "https://docs.astral.sh/uv/getting-started/installation/",
               receiptJSONFile: ".config/uv/uv-receipt.json"),
@@ -228,6 +242,18 @@ struct DirectInstallRecipe: Sendable {
     }
 
     func version(from resolved: URL, homeDirectory: URL) -> String? {
+        if id == "ollama-cli", resolved.path.hasSuffix("/Ollama.app/Contents/Resources/ollama") {
+            let plist = resolved.deletingLastPathComponent().deletingLastPathComponent()
+                .appendingPathComponent("Info.plist")
+            guard let attributes = try? FileManager.default.attributesOfItem(atPath: plist.path),
+                  let size = attributes[.size] as? NSNumber, size.intValue < 256 * 1_024,
+                  let data = try? Data(contentsOf: plist), data.count < 256 * 1_024,
+                  let metadata = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any],
+                  metadata["CFBundleIdentifier"] as? String == "com.electron.ollama",
+                  let version = metadata["CFBundleShortVersionString"] as? String,
+                  Self.isValidVersionString(version) else { return nil }
+            return version
+        }
         if let versionDirectory {
             let root = homeDirectory.appendingPathComponent(versionDirectory).standardizedFileURL.path
             if resolved.path.hasPrefix(root + "/") {

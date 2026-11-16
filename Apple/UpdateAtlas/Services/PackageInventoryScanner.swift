@@ -371,7 +371,7 @@ struct PackageInventoryScanner: Sendable {
             )
             return packageCandidate(
                 provenance: provenance,
-                name: name,
+                name: name == "cf" ? "Cloudflare CLI (cf)" : name,
                 version: version,
                 path: installLocation ?? executablePath,
                 kind: .commandLineTool
