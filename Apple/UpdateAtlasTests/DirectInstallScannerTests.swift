@@ -76,6 +76,32 @@ struct DirectInstallScannerTests {
         #expect(classified.parentManagerName == "Ollama")
     }
 
+    @Test func exactOllamaAppLinkRetainsItsChildThroughCaskroom() throws {
+        let fixture = try DirectInstallFixture()
+        defer { fixture.remove() }
+        let realApp = fixture.home.appendingPathComponent("Caskroom/ollama/0.40.11/Ollama.app")
+        try fixture.makeExecutable("Caskroom/ollama/0.40.11/Ollama.app/Contents/Resources/ollama")
+        let plist = ["CFBundleIdentifier": "com.electron.ollama", "CFBundleShortVersionString": "0.40.11"]
+        try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+            .write(to: realApp.appendingPathComponent("Contents/Info.plist"))
+        try fixture.makeLink("Applications/Ollama.app", to: "../Caskroom/ollama/0.40.11/Ollama.app")
+        try fixture.makeLink("fake-system-bin/ollama", to: "../Applications/Ollama.app/Contents/Resources/ollama")
+        let parent = ApplicationCandidate(
+            path: fixture.home.appendingPathComponent("Applications/Ollama.app").path, name: "Ollama",
+            bundleIdentifier: "com.electron.ollama", displayVersion: "0.40.11", buildVersion: "",
+            teamIdentifier: nil, parentManagerBundleIdentifier: nil, isSystemApplication: false, info: [:])
+        let candidate = try #require(fixture.scanner.scan(packageCandidates: [],
+            applicationCandidates: [parent]).candidates.first)
+        #expect(candidate.parentInventoryID == parent.inventoryID)
+        #expect(candidate.displayVersion == "0.40.11")
+        #expect(candidate.info["DirectInstallVersionProven"] == "true")
+        let catalog = RemoteCatalog(schemaVersion: 1, catalogID: "fixture", revision: 1,
+            generatedAt: Date(), expiresAt: nil, entries: [])
+        let classified = try #require(UpdateDetectionEngine().classify([candidate], catalog: catalog).first)
+        #expect(classified.mechanism == .externalManager)
+        #expect(classified.parentManagerName == "Ollama")
+    }
+
     @Test func standaloneOllamaDoesNotBorrowAnUnrelatedAppVersionOrParent() throws {
         let fixture = try DirectInstallFixture()
         defer { fixture.remove() }

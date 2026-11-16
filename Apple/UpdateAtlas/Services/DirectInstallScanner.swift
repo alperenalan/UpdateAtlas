@@ -53,20 +53,21 @@ struct DirectInstallScanner: Sendable {
                     continue
                 }
 
-                if Self.isPackageManaged(resolvedPath: resolved.path, packageCandidates: packageCandidates)
-                    || Self.isManagerOwnedPath(resolved.path)
-                    || (recipe.id == "starship" && resolved.path.contains("/.cargo/bin/")) {
-                    continue
-                }
-                guard seenResolvedPaths.insert(resolved.path).inserted else { continue }
-
-                let version = recipe.version(from: resolved, homeDirectory: homeDirectory)
                 let ollamaParent = recipe.id == "ollama-cli"
                     ? applicationCandidates.first(where: { app in
                         app.bundleIdentifier == "com.electron.ollama"
                             && resolved.path == URL(fileURLWithPath: app.path).resolvingSymlinksInPath()
                                 .appendingPathComponent("Contents/Resources/ollama").path
                     }) : nil
+                if ollamaParent == nil && (
+                    Self.isPackageManaged(resolvedPath: resolved.path, packageCandidates: packageCandidates)
+                    || Self.isManagerOwnedPath(resolved.path)
+                    || (recipe.id == "starship" && resolved.path.contains("/.cargo/bin/"))) {
+                    continue
+                }
+                guard seenResolvedPaths.insert(resolved.path).inserted else { continue }
+
+                let version = recipe.version(from: resolved, homeDirectory: homeDirectory)
                 var info = [
                     "DirectInstallSource": recipe.documentationURL,
                     "DirectInstallOwner": recipe.owner,
