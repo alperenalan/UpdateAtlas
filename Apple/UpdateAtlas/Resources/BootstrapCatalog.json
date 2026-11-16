@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "catalogID": "update-atlas-bootstrap",
-  "revision": 15,
-  "generatedAt": "2026-10-29T22:00:00Z",
+  "revision": 16,
+  "generatedAt": "2026-10-29T22:40:00Z",
   "expiresAt": null,
   "entries": [
     {
@@ -97,7 +97,7 @@
     {
       "id": "affinity-v3-macos",
       "displayName": "Affinity",
-      "publisher": "Affinity",
+      "publisher": "Canva",
       "match": {
         "bundleIdentifiers": [
           "com.canva.affinity"
@@ -111,24 +111,32 @@
       },
       "mechanism": {
         "type": "sparkle",
-        "name": "Affinity Updater · Homebrew version source",
+        "name": "Affinity Updater · Official appcast",
         "feedURL": null,
         "managerBundleIdentifier": null,
-        "provider": {
-          "type": "homebrewCask",
-          "url": "https://formulae.brew.sh/api/cask/affinity.json",
-          "channel": "stable",
-          "releaseChannel": "stable"
-        }
+        "providers": [
+          {
+            "type": "sparkleAppcast",
+            "url": "https://things.seriflabs.com/affinity-update-mac-retail-studiopro",
+            "channel": "stable",
+            "releaseChannel": "stable"
+          },
+          {
+            "type": "homebrewCask",
+            "url": "https://formulae.brew.sh/api/cask/affinity.json",
+            "channel": "stable",
+            "releaseChannel": "stable"
+          }
+        ]
       },
       "support": "supported",
       "vendorURL": "https://www.affinity.studio/",
-      "notes": "The app embeds Sparkle but configures its feed at runtime. Until Canva publishes a stable public feed, version discovery uses Homebrew Cask metadata."
+      "notes": "Canva owns Affinity. The installed retail app records this public Sparkle feed at runtime; its build is compared with that feed, with Homebrew Cask as a guarded fallback. The app itself owns installation, and Update Atlas does not trigger its updater."
     },
     {
       "id": "affinity-designer-v2-macos",
       "displayName": "Affinity Designer 2",
-      "publisher": "Affinity",
+      "publisher": "Canva",
       "match": {
         "bundleIdentifiers": [
           "com.seriflabs.affinitydesigner2"
@@ -139,24 +147,19 @@
         ]
       },
       "mechanism": {
-        "type": "sparkle",
-        "name": "Affinity Updater · Homebrew version source",
+        "type": "unknown",
+        "name": "Legacy Affinity 2 · Discontinued",
         "feedURL": null,
-        "managerBundleIdentifier": null,
-        "provider": {
-          "type": "homebrewCask",
-          "url": "https://formulae.brew.sh/api/cask/affinity-designer.json",
-          "channel": "stable"
-        }
+        "managerBundleIdentifier": null
       },
-      "support": "supported",
-      "vendorURL": "https://affinity.serif.com/designer/",
-      "notes": "Legacy Serif/Affinity v2 release tracked through Homebrew Cask metadata."
+      "support": "unsupported",
+      "vendorURL": "https://www.affinity.studio/download",
+      "notes": "Canva says previous Affinity versions will receive no further updates. This legacy app remains inventoried, but a frozen Homebrew package version must not be treated as proof of freshness."
     },
     {
       "id": "affinity-photo-v2-macos",
       "displayName": "Affinity Photo 2",
-      "publisher": "Affinity",
+      "publisher": "Canva",
       "match": {
         "bundleIdentifiers": [
           "com.seriflabs.affinityphoto2"
@@ -167,24 +170,19 @@
         ]
       },
       "mechanism": {
-        "type": "sparkle",
-        "name": "Affinity Updater · Homebrew version source",
+        "type": "unknown",
+        "name": "Legacy Affinity 2 · Discontinued",
         "feedURL": null,
-        "managerBundleIdentifier": null,
-        "provider": {
-          "type": "homebrewCask",
-          "url": "https://formulae.brew.sh/api/cask/affinity-photo.json",
-          "channel": "stable"
-        }
+        "managerBundleIdentifier": null
       },
-      "support": "supported",
-      "vendorURL": "https://affinity.serif.com/photo/",
-      "notes": "Legacy Serif/Affinity v2 release tracked through Homebrew Cask metadata."
+      "support": "unsupported",
+      "vendorURL": "https://www.affinity.studio/download",
+      "notes": "Canva says previous Affinity versions will receive no further updates. This legacy app remains inventoried, but a frozen Homebrew package version must not be treated as proof of freshness."
     },
     {
       "id": "affinity-publisher-v2-macos",
       "displayName": "Affinity Publisher 2",
-      "publisher": "Affinity",
+      "publisher": "Canva",
       "match": {
         "bundleIdentifiers": [
           "com.seriflabs.affinitypublisher2"
@@ -195,19 +193,14 @@
         ]
       },
       "mechanism": {
-        "type": "sparkle",
-        "name": "Affinity Updater · Homebrew version source",
+        "type": "unknown",
+        "name": "Legacy Affinity 2 · Discontinued",
         "feedURL": null,
-        "managerBundleIdentifier": null,
-        "provider": {
-          "type": "homebrewCask",
-          "url": "https://formulae.brew.sh/api/cask/affinity-publisher.json",
-          "channel": "stable"
-        }
+        "managerBundleIdentifier": null
       },
-      "support": "supported",
-      "vendorURL": "https://affinity.serif.com/publisher/",
-      "notes": "Legacy Serif/Affinity v2 release tracked through Homebrew Cask metadata."
+      "support": "unsupported",
+      "vendorURL": "https://www.affinity.studio/download",
+      "notes": "Canva says previous Affinity versions will receive no further updates. This legacy app remains inventoried, but a frozen Homebrew package version must not be treated as proof of freshness."
     },
     {
       "id": "canva-desktop-macos",

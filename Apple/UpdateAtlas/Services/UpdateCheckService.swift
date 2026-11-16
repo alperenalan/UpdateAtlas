@@ -333,6 +333,13 @@ struct UpdateCheckService: Sendable {
             guard Self.hasComparableVersion(application.buildVersion) else {
                 return unreadableInstalledVersion(application, source: .sparkleAppcast)
             }
+            if application.bundleIdentifier == "com.canva.affinity",
+               VersionComparator.isNewer(application.buildVersion, than: release.buildVersion) {
+                return .sourcePending(
+                    installedVersion: application.displayVersion,
+                    detail: String(localized: "The installed build matches or exceeds the latest Sparkle release.", bundle: AppL10n.bundle, locale: AppL10n.locale)
+                )
+            }
             let available = VersionComparator.isNewer(
                 release.buildVersion,
                 than: application.buildVersion
@@ -674,7 +681,8 @@ struct UpdateCheckService: Sendable {
             if application.bundleIdentifier == "Qisda.DDPM" {
                 return dellDDPMCaskResult(application, latestVersion: latest)
             }
-            if ["com.google.GeminiMacOS", "com.google.antigravity", "com.google.antigravity-ide"]
+            if ["com.google.GeminiMacOS", "com.google.antigravity", "com.google.antigravity-ide",
+                "com.canva.affinity", "com.canva.CanvaDesktop"]
                 .contains(application.bundleIdentifier),
                VersionComparator.isNewer(application.displayVersion, than: latest) {
                 return .sourcePending(

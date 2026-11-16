@@ -24,7 +24,7 @@ final class CatalogTests: XCTestCase {
         XCTAssertNotNil(catalog.entries.first(where: { $0.id == "comfyui-managed-stable" }))
         XCTAssertNotNil(catalog.entries.first(where: { $0.id == "chatgpt-macos-stable" }))
         XCTAssertNotNil(catalog.entries.first(where: { $0.id == "visual-studio-code-stable-macos" }))
-        XCTAssertEqual(catalog.revision, 15)
+        XCTAssertEqual(catalog.revision, 16)
         XCTAssertGreaterThanOrEqual(catalog.entries.count, 200)
         let vendorSources: [(String, String, CatalogVersionProviderKind)] = [
             ("canon-ij-scan-utility2-macos", "jp.co.canon.ij.scanutility2", .canonSupportRelease),
@@ -58,6 +58,27 @@ final class CatalogTests: XCTestCase {
         let androidStudio = try XCTUnwrap(catalog.entries.first(where: { $0.id == "android-studio-macos-stable" }))
         XCTAssertEqual(androidStudio.match.bundleIdentifiers, ["com.google.android.studio"])
         XCTAssertEqual(androidStudio.mechanism.versionProviders.map(\.type), [.androidStudioReleasePage, .homebrewCask])
+        let affinity = try XCTUnwrap(catalog.entries.first(where: { $0.id == "affinity-v3-macos" }))
+        XCTAssertEqual(affinity.publisher, "Canva")
+        XCTAssertEqual(affinity.mechanism.versionProviders.map(\.type), [.sparkleAppcast, .homebrewCask])
+        XCTAssertEqual(affinity.mechanism.versionProviders.first?.url.absoluteString,
+                       "https://things.seriflabs.com/affinity-update-mac-retail-studiopro")
+        for id in ["affinity-designer-v2-macos", "affinity-photo-v2-macos", "affinity-publisher-v2-macos"] {
+            let legacy = try XCTUnwrap(catalog.entries.first(where: { $0.id == id }))
+            XCTAssertEqual(legacy.publisher, "Canva")
+            XCTAssertEqual(legacy.support, .unsupported)
+            XCTAssertTrue(legacy.mechanism.versionProviders.isEmpty)
+            let bundleID = try XCTUnwrap(legacy.match.bundleIdentifiers?.first)
+            let candidate = ApplicationCandidate(
+                path: "/Applications/Legacy Affinity.app", name: "Legacy Affinity",
+                bundleIdentifier: bundleID, displayVersion: "2.6.5", buildVersion: "3782",
+                teamIdentifier: nil, parentManagerBundleIdentifier: nil,
+                isSystemApplication: false, info: [:]
+            )
+            let classified = UpdateDetectionEngine().classify([candidate], catalog: catalog).first
+            XCTAssertEqual(classified?.catalogEntryID, id)
+            XCTAssertEqual(classified?.status, .unsupported)
+        }
         XCTAssertEqual(
             catalog.entries.first(where: { $0.id == "firefox-macos-stable" })?.mechanism.provider?.channel,
             "LATEST_FIREFOX_VERSION"
@@ -136,7 +157,7 @@ final class CatalogTests: XCTestCase {
         }
         let updaters = groups.first { $0.category == .builtInUpdater }!
         XCTAssertGreaterThanOrEqual(updaters.entries.filter { $0.publisher == "Google" }.count, 3)
-        XCTAssertEqual(updaters.entries.filter { $0.publisher == "Affinity" }.count, 4)
+        XCTAssertEqual(updaters.entries.filter { $0.publisher == "Canva" }.count, 2)
         XCTAssertEqual(Set(groups.flatMap(\.entries).map(\.id)), Set(catalog.entries.map(\.id)))
     }
 
