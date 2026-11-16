@@ -619,6 +619,7 @@ struct UpdateDetectionEngine: Sendable {
             "app.getmythic.Mythic": "Mythic",
             "org.winehq.wine-stable": "Wine",
             "com.docker.docker": "Docker",
+            "com.electron.ollama": "Ollama",
             "dev.kdrag0n.OrbStack": "OrbStack",
             "com.utmapp.UTM": "UTM",
             "com.vmware.fusion": "VMware Fusion",

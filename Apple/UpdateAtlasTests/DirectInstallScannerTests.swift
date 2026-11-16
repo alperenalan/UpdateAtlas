@@ -46,6 +46,86 @@ struct DirectInstallScannerTests {
         #expect(snapshot.candidates.first?.displayVersion == "2.1.211")
     }
 
+    @Test func ollamaAppLinkIsDiscoveredAsItsCLIChild() throws {
+        let fixture = try DirectInstallFixture()
+        defer { fixture.remove() }
+        let app = fixture.home.appendingPathComponent("Applications/Ollama.app")
+        try fixture.makeExecutable("Applications/Ollama.app/Contents/Resources/ollama")
+        let plist: [String: String] = [
+            "CFBundleIdentifier": "com.electron.ollama",
+            "CFBundleShortVersionString": "0.40.11"
+        ]
+        let data = try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+        try data.write(to: app.appendingPathComponent("Contents/Info.plist"))
+        try fixture.makeLink("fake-system-bin/ollama", to: "../Applications/Ollama.app/Contents/Resources/ollama")
+        let parent = ApplicationCandidate(path: app.path, name: "Ollama",
+            bundleIdentifier: "com.electron.ollama", displayVersion: "0.40.11", buildVersion: "",
+            teamIdentifier: nil, parentManagerBundleIdentifier: nil, isSystemApplication: false, info: [:])
+
+        let candidate = try #require(fixture.scanner.scan(packageCandidates: [],
+            applicationCandidates: [parent]).candidates.first)
+        #expect(candidate.bundleIdentifier == "direct-cli:ollama-cli")
+        #expect(candidate.displayVersion == "0.40.11")
+        #expect(candidate.parentInventoryID == parent.inventoryID)
+        #expect(candidate.parentManagerBundleIdentifier == "com.electron.ollama")
+        #expect(candidate.info["DirectInstallVersionProven"] == "true")
+        let catalog = RemoteCatalog(schemaVersion: 1, catalogID: "test", revision: 1,
+            generatedAt: Date(), expiresAt: nil, entries: [])
+        let classified = try #require(UpdateDetectionEngine().classify([candidate], catalog: catalog).first)
+        #expect(classified.mechanism == .externalManager)
+        #expect(classified.parentManagerName == "Ollama")
+    }
+
+    @Test func exactOllamaAppLinkRetainsItsChildThroughCaskroom() throws {
+        let fixture = try DirectInstallFixture()
+        defer { fixture.remove() }
+        let realApp = fixture.home.appendingPathComponent("Caskroom/ollama/0.40.11/Ollama.app")
+        try fixture.makeExecutable("Caskroom/ollama/0.40.11/Ollama.app/Contents/Resources/ollama")
+        let plist = ["CFBundleIdentifier": "com.electron.ollama", "CFBundleShortVersionString": "0.40.11"]
+        try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0)
+            .write(to: realApp.appendingPathComponent("Contents/Info.plist"))
+        try fixture.makeLink("Applications/Ollama.app", to: "../Caskroom/ollama/0.40.11/Ollama.app")
+        try fixture.makeLink("fake-system-bin/ollama", to: "../Applications/Ollama.app/Contents/Resources/ollama")
+        let parent = ApplicationCandidate(
+            path: fixture.home.appendingPathComponent("Applications/Ollama.app").path, name: "Ollama",
+            bundleIdentifier: "com.electron.ollama", displayVersion: "0.40.11", buildVersion: "",
+            teamIdentifier: nil, parentManagerBundleIdentifier: nil, isSystemApplication: false, info: [:])
+        let candidate = try #require(fixture.scanner.scan(packageCandidates: [],
+            applicationCandidates: [parent]).candidates.first)
+        #expect(candidate.parentInventoryID == parent.inventoryID)
+        #expect(candidate.displayVersion == "0.40.11")
+        #expect(candidate.info["DirectInstallVersionProven"] == "true")
+        let catalog = RemoteCatalog(schemaVersion: 1, catalogID: "fixture", revision: 1,
+            generatedAt: Date(), expiresAt: nil, entries: [])
+        let classified = try #require(UpdateDetectionEngine().classify([candidate], catalog: catalog).first)
+        #expect(classified.mechanism == .externalManager)
+        #expect(classified.parentManagerName == "Ollama")
+    }
+
+    @Test func standaloneOllamaDoesNotBorrowAnUnrelatedAppVersionOrParent() throws {
+        let fixture = try DirectInstallFixture()
+        defer { fixture.remove() }
+        try fixture.makeExecutable(".local/bin/ollama")
+        let app = fixture.home.appendingPathComponent("Applications/Ollama.app")
+        let parent = ApplicationCandidate(path: app.path, name: "Ollama",
+            bundleIdentifier: "com.electron.ollama", displayVersion: "0.40.11", buildVersion: "",
+            teamIdentifier: nil, parentManagerBundleIdentifier: nil, isSystemApplication: false, info: [:])
+        let candidate = try #require(fixture.scanner.scan(packageCandidates: [],
+            applicationCandidates: [parent]).candidates.first)
+        #expect(candidate.parentInventoryID == nil)
+        #expect(candidate.parentManagerBundleIdentifier == nil)
+        #expect(candidate.displayVersion == String(localized: "Unknown", bundle: AppL10n.bundle, locale: AppL10n.locale))
+        #expect(candidate.info["DirectInstallVersionProven"] == nil)
+    }
+
+    @Test func packagedOllamaAliasIsNotClaimedAsDirect() throws {
+        let fixture = try DirectInstallFixture()
+        defer { fixture.remove() }
+        try fixture.makeExecutable("Cellar/ollama/0.40.11/bin/ollama")
+        try fixture.makeLink("fake-system-bin/ollama", to: "../Cellar/ollama/0.40.11/bin/ollama")
+        #expect(fixture.scanner.scan(packageCandidates: [], applicationCandidates: []).candidates.isEmpty)
+    }
+
     @Test func packageManagedLinkIsNotMislabelledAsDirect() throws {
         let fixture = try DirectInstallFixture()
         defer { fixture.remove() }

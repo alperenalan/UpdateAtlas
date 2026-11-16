@@ -3,6 +3,20 @@ import XCTest
 @testable import UpdateAtlas
 
 final class PackageInventoryTests: XCTestCase {
+    func testCloudflareCLIKeepsNPMIdentityAndOutdatedEvidence() throws {
+        let installed = #"{"dependencies":{"cf":{"version":"1.0.0-beta.12"}}}"#
+        let outdated = #"{"cf":{"current":"1.0.0-beta.12","latest":"1.0.0-beta.13"}}"#
+        let candidate = try XCTUnwrap(PackageInventoryScanner.parseNPM(
+            data: Data(installed.utf8), executablePath: "/Users/example/.local/bin/npm",
+            globalRoot: "/Users/example/.local/lib/node_modules",
+            outdatedData: Data(outdated.utf8)).first)
+        XCTAssertEqual(candidate.name, "Cloudflare CLI (cf)")
+        XCTAssertEqual(candidate.inventoryID, "package:npm:/Users/example/.local/bin/npm:cf")
+        XCTAssertEqual(candidate.packageProvenance?.identifier, "cf")
+        XCTAssertEqual(candidate.packageProvenance?.manager, .npm)
+        XCTAssertEqual(candidate.packageProvenance?.latestVersion, "1.0.0-beta.13")
+    }
+
     func testHomebrewIncludesRequestedFormulaAndMapsCaskTarget() throws {
         let json = #"""
         {

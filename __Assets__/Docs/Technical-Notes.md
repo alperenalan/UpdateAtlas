@@ -222,3 +222,9 @@ still require `--include-paths`. Docker objects and Wine bottles use `releaseCha
 instead of a guessed software release channel. Parent IDs remain opaque and support `--manager`/`--children-of`.
 A missing Docker CLI or unreadable Galaxy database is a diagnostic, never evidence of an empty
 successful source. Docker image tags have no version comparison or update/install action.
+
+Ollama CLI links are represented beneath the discovered Ollama app only when their exact
+resolved binary matches that app. A bounded, identity-checked app plist supplies the version;
+standalone binaries do not borrow it. The existing npm package cf is displayed as Cloudflare
+CLI (cf), retaining its provenance-derived ID and npm-owned update evidence. These additions
+do not introduce a CLI update action. See [the read-only probes](Ollama-Cloudflare-CLI-PoC.md).
