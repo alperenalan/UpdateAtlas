@@ -135,6 +135,25 @@ The Xcode project is generated: edit `Apple/project.yml`, not the `.xcodeproj`. 
 is off because Update Atlas has to read app bundles outside its container. More detail lives in
 [architecture](__Assets__/Docs/architecture.md) and the [technical notes](__Assets__/Docs/Technical-Notes.md).
 
+## Project workflow
+
+Maintainer work uses [Jira ATLAS](https://alperen-alan.atlassian.net/jira/software/projects/ATLAS/boards/3)
+and the [Confluence project home](https://alperen-alan.atlassian.net/wiki/spaces/ATLAS/overview).
+Read the [working method](https://alperen-alan.atlassian.net/wiki/spaces/ATLAS/pages/3342376)
+and the relevant issue before starting. Public bug reports and contributions still use GitHub.
+
+Ideas → To Do → In Progress → In Review → Waiting for Publish → Done.
+Accepted work stays in Waiting for Publish until its relevant release is public; Done needs
+dated live release evidence. Tasks, comments and QA belong in Jira; durable product, design and
+research knowledge belongs in Confluence. Do not create another Markdown plan or backlog.
+
+Code-linked contracts, localization ledgers, build/release tools and their inputs stay beside
+the source. Historical maintainer notes live only in ignored `__Assets__/Archive/`, backed up
+to the private archive repository. Original icon PNGs and private catalog drafts remain local
+and ignored; compiled app assets and public catalog sources stay in Git.
+Maintainer archive restoration and backup are documented in
+[Confluence](https://alperen-alan.atlassian.net/wiki/spaces/ATLAS/pages/3997699).
+
 ## Contributing
 
 Bug reports, catalog additions and pull requests are welcome. Please read

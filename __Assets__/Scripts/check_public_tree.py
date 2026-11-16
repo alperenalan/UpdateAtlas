@@ -12,7 +12,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 PRIVATE_NAMES = re.compile(r"(^|/)(\.env(?:\..+)?|Secrets\.xcconfig|[^/]*\.p8|[^/]*\.mobileprovision|[^/]*\.keystore|[^/]*\.jks|[^/]*credentials[^/]*\.sh)$", re.I)
-PRIVATE_FOLDERS = ("__Assets__/Design/", "__Assets__/Contentgen/Catalog/private/", ".temporary_files/", "__Builds__/", "__MACOSX/")
+PRIVATE_FOLDERS = ("__Assets__/Archive/", "__Assets__/Design/", "__Assets__/Contentgen/Catalog/private/", ".temporary_files/", "__Builds__/", "__MACOSX/")
 CONTENT_PATTERNS = {
     "private key block": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"),
     "GitHub token": re.compile(rb"(?:ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})"),

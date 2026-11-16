@@ -55,9 +55,10 @@ Apple/UpdateAtlas/Info.plist
 .wrangler/
 .claude/
 
-# ---- maintainer and AI-agent working notes: kept on this Mac, backed up in the private
-# ---- UpdateAtlas-archive repository, never published with the source
+# ---- private maintainer sources; Jira/Confluence own active project management
+# ---- historical originals and release instructions are backed up privately
 /PROJECT_*.md
+__Assets__/Archive/
 /.doclinks-ignore
 __Assets__/Docs/History/
 __Assets__/Docs/plans/
